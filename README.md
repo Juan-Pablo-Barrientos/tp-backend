@@ -9,57 +9,57 @@ Resumen
 
 ABMC:
 
-Usuarios:
+User:
 
 * Id
-* Nombre
-* Apellido
-* Telefono
-* Duracion
+* Name
+* Surname
+* Telephone
+* dateUntil
 
-Categoria:
-
-* Id
-* Descripcion
-
-Provincia:
+Category
 
 * Id
-* Descripcion
+* Description
 
-Subscripcion:
-
-* Precio
-
-Nota:
+Province
 
 * Id
-* IdUsuario
-* IdCategoria
-* IdProvincia
-* Titulo
-* Descripcion
-* SubscripcionNecesaria
-* Imagen
+* Description
 
-Encuesta:
+Subscription:
+
+* Price
+* EffectiveDate
+
+Post
 
 * Id
-* IdCategoria
-* Pregunta
-* Respuesta
+* IdUser
+* IdCategory
+* IdProvince
+* Heading
+* Description
+* RequiredSub
+* ImageTimestamp
 
-Respuesta:
+Poll
 
-* IdEncuesta
-* NumeroRespuesta
-* Descripcion
+* Id
+* IdCategory
+* Question
 
-RespuestaEncuesta
+Poll_Value
 
-* IdEncuesta
-* IdUsuario
-* Respuesta
+* IdPoll
+* Id
+* Description
+
+User_Vote
+
+* IdPoll
+* IdUser
+* Answer
 
 Listado:
 
@@ -73,9 +73,9 @@ Detalle 1:
 
 Nota
 
-* Titulo
-* Descripcion
-* Imagen
+* Heaeding
+* Description
+* ImageTimestamp
 
 Detalle 2:
 
