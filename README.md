@@ -14,9 +14,10 @@ User:
 * Id
 * Name
 * Surname
-* UserRole
+* UserName
+* Role
 * Telephone
-* dateUntil
+* subscribedUntil
 
 Category
 
