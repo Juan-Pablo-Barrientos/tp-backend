@@ -3,6 +3,8 @@ Miembros:
 * Marti, Sebastian: Leg 45852
 * Zonta, Sebastian: Leg 45712
 * Cervillera, Tomas: Leg 45799
+* 
+*** Modelo de datos**
 
 ![unknown](https://user-images.githubusercontent.com/63053666/161178812-cc688d71-a81c-4780-b409-74f31cedfaab.png)
 
