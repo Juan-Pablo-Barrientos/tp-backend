@@ -1,7 +1,7 @@
 Miembros:
 * Barrientos, Juan Pablo: Leg 45838
 * Marti, Sebastian: Leg 45852
-* Zonta, Sebastian: Leg ?
+* Zonta, Sebastian: Leg 45712
 * Cervillera, Tomas: Leg 45799
 
 Resumen
@@ -9,9 +9,9 @@ Resumen
 
 ABMC:
 
-User:
+Users:
 
-* Id
+* **Id**
 * Name
 * Surname
 * UserName
@@ -19,24 +19,24 @@ User:
 * Telephone
 * subscribedUntil
 
-Category
+Categories
 
-* Id
+* **Id**
 * Name
 
-Province
+Provinces
 
-* Id
+* **Id**
 * Name
 
-Subscription:
+Subscriptions:
 
 * Price
-* EffectiveDate
+* **EffectiveDate**
 
-Post
+Posts
 
-* Id
+* **Id**
 * UserId
 * CategoryId
 * ProvinceId
@@ -44,23 +44,23 @@ Post
 * Body
 * RequiresSubscription
 
-Poll
+Polls
 
-* Id
+* **Id**
 * CategoryId
 * Description
 
-Poll_Value
+Poll_Values
 
-* Id
+* **Id**
 * PollId
 * Description
 
-User_Vote
+User_Votes
 
-* UserId
-* PollId
-* PollValueId
+* **UserId**
+* **PollId**
+* **PollValueId**
 
 
 Listado:
