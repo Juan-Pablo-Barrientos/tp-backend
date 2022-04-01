@@ -5,6 +5,7 @@ Miembros:
 * Cervillera, Tomas: Leg 45799
 
 **Modelo de datos**
+
 ![unknown](https://user-images.githubusercontent.com/63053666/161178812-cc688d71-a81c-4780-b409-74f31cedfaab.png)
 
 Resumen
