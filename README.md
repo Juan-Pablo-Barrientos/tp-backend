@@ -14,18 +14,19 @@ User:
 * Id
 * Name
 * Surname
+* UserRole
 * Telephone
 * dateUntil
 
 Category
 
 * Id
-* Description
+* Name
 
 Province
 
 * Id
-* Description
+* Name
 
 Subscription:
 
@@ -35,31 +36,31 @@ Subscription:
 Post
 
 * Id
-* IdUser
-* IdCategory
-* IdProvince
-* Heading
-* Description
-* RequiredSub
-* ImageTimestamp
+* UserId
+* CategoryId
+* ProvinceId
+* Title
+* Body
+* RequiresSubscription
 
 Poll
 
 * Id
-* IdCategory
-* Question
+* CategoryId
+* Description
 
 Poll_Value
 
-* IdPoll
 * Id
+* PollId
 * Description
 
 User_Vote
 
-* IdPoll
-* IdUser
-* Answer
+* UserId
+* PollId
+* PollValueId
+
 
 Listado:
 
@@ -73,9 +74,8 @@ Detalle 1:
 
 Nota
 
-* Heaeding
-* Description
-* ImageTimestamp
+* Heading
+* Body
 
 Detalle 2:
 
