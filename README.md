@@ -4,6 +4,8 @@ Miembros:
 * Zonta, Sebastian: Leg 45712
 * Cervillera, Tomas: Leg 45799
 
+![unknown](https://user-images.githubusercontent.com/63053666/161178812-cc688d71-a81c-4780-b409-74f31cedfaab.png)
+
 Resumen
 * En este trabajo practico de TTADS vamos a realizar un diario online, en este los usuarios periodistas van a poder cargar notas periodisticas y los administradores van a poder cargar encuestas que los usuarios van a poder responder. Los usuarios van a poder subscribirse para recibir noticias por email y acceso a noticias exclusivas.
 
