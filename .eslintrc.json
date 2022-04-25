@@ -15,5 +15,13 @@
   "rules": {
     "linebreak-style": ["warn", "windows"],
     "no-console": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx",".ts"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
   }
 }
