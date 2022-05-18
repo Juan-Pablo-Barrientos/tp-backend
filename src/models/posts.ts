@@ -4,7 +4,13 @@ import { sequelize } from '../database/connection';
 
 const Sequelize = require('sequelize');
 
-exports = sequelize.define('Posts', {
+const Categories = require('./categories.ts');
+
+const Provinces = require('./provinces.ts');
+
+const User = require('./user.ts');
+
+const Posts = sequelize.define('Posts', {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -32,3 +38,9 @@ exports = sequelize.define('Posts', {
 
   requiresSubscription: Sequelize.BOOLEAN,
 });
+
+Posts.hasMany(Categories, { as: 'category' });
+
+Posts.hasMany(Provinces, { as: 'province' });
+
+Posts.hasMany(User, { as: 'user' });

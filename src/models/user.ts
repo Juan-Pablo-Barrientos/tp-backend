@@ -4,7 +4,11 @@ import { sequelize } from '../database/connection';
 
 const Sequelize = require('sequelize');
 
-exports = sequelize.define('User', {
+const Posts = require('./posts.ts');
+
+const UserVotes = require('./user_votes.ts');
+
+const User = sequelize.define('User', {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -28,4 +32,14 @@ exports = sequelize.define('User', {
 
   phoneNumber: Sequelize.STRING(45),
   subscribedUntil: Sequelize.DATE,
+});
+
+User.belongsTo(Posts, {
+  foreignKey: 'id',
+  as: 'post',
+});
+
+User.belongsTo(UserVotes, {
+  foreignKey: 'id',
+  as: 'uservote',
 });

@@ -4,7 +4,11 @@ import { sequelize } from '../database/connection';
 
 const Sequelize = require('sequelize');
 
-exports = sequelize.define('Categories', {
+const Polls = require('./polls.ts');
+
+const Posts = require('./posts.ts');
+
+const Categories = sequelize.define('Categories', {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -13,4 +17,14 @@ exports = sequelize.define('Categories', {
   },
 
   name: Sequelize.STRING(200),
+});
+
+Categories.belongsTo(Polls, {
+  foreignKey: 'id',
+  as: 'poll',
+});
+
+Categories.belongsTo(Posts, {
+  foreignKey: 'id',
+  as: 'post',
 });

@@ -4,7 +4,9 @@ import { sequelize } from '../database/connection';
 
 const Sequelize = require('sequelize');
 
-exports = sequelize.define('Provinces', {
+const Posts = require('./posts.ts');
+
+const Provinces = sequelize.define('Provinces', {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -13,4 +15,9 @@ exports = sequelize.define('Provinces', {
   },
 
   name: Sequelize.STRING(200),
+});
+
+Provinces.belongsTo(Posts, {
+  foreignKey: 'id',
+  as: 'post',
 });

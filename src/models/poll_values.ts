@@ -4,7 +4,11 @@ import { sequelize } from '../database/connection';
 
 const Sequelize = require('sequelize');
 
-exports = sequelize.define('PollValues', {
+const Polls = require('./polls.ts');
+
+const UserVotes = require('./user_votes.ts');
+
+const PollValues = sequelize.define('PollValues', {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
@@ -19,4 +23,11 @@ exports = sequelize.define('PollValues', {
   },
 
   description: Sequelize.STRING(200),
+});
+
+PollValues.hasMany(Polls, { as: 'pollvalue' });
+
+PollValues.belongsTo(UserVotes, {
+  foreignKey: 'id',
+  as: 'uservote',
 });
