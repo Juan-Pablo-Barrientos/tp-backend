@@ -4,7 +4,7 @@ import { sequelize } from '../database/connection';
 
 const Sequelize = require('sequelize');
 
-exports = sequelize.define('poll_values', {
+exports = sequelize.define('PollValues', {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,

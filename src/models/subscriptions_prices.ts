@@ -4,7 +4,7 @@ import { sequelize } from '../database/connection';
 
 const Sequelize = require('sequelize');
 
-exports = sequelize.define('subscriptions_prices', {
+exports = sequelize.define('SubscriptionsPrices', {
   effectiveDate: {
     type: Sequelize.DATE,
     allowNull: false,

@@ -4,7 +4,7 @@ import { sequelize } from '../database/connection';
 
 const Sequelize = require('sequelize');
 
-exports = sequelize.define('categories', {
+exports = sequelize.define('Categories', {
   id: {
     type: Sequelize.INTEGER(11),
     allowNull: false,
