@@ -1,21 +1,19 @@
-/* eslint-disable import/extensions */
-// eslint-disable-next-line import/no-unresolved
-import { sequelize } from '../database/connection';
+import { DataTypes } from 'sequelize';
+import sequelizeORM from '../database/connection';
 
-const Sequelize = require('sequelize');
+import Posts from './posts';
 
-const Posts = require('./posts.ts');
-
-const Provinces = sequelize.define('Provinces', {
+const Provinces = sequelizeORM.define('Provinces', {
   id: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
   },
 
-  name: Sequelize.STRING(200),
+  name: DataTypes.STRING(200),
 });
+export default Provinces;
 
 Provinces.belongsTo(Posts, {
   foreignKey: 'id',

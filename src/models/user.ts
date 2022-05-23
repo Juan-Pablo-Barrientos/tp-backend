@@ -1,12 +1,8 @@
-/* eslint-disable import/extensions */
-// eslint-disable-next-line import/no-unresolved
 import { DataTypes } from 'sequelize';
+import sequelizeORM from '../database/connection';
 
-import { sequelizeORM } from '../database/connection';
-
-const Posts = require('./posts.ts');
-
-const UserVotes = require('./user_votes.ts');
+import Posts from './posts';
+import UserVotes from './user_votes';
 
 const User = sequelizeORM.define('User', {
   id: {

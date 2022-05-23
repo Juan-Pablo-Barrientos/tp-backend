@@ -20,8 +20,8 @@
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx",".ts"],
-        "moduleDirectory": ["node_modules", "src/"]
+        "moduleDirectory": ["node_modules", "src/","src/database/connection"]
       }
-    }
+    },
   }
 }

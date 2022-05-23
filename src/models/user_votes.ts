@@ -1,35 +1,31 @@
-/* eslint-disable import/extensions */
-// eslint-disable-next-line import/no-unresolved
-import { sequelize } from '../database/connection';
+import { DataTypes } from 'sequelize';
+import sequelizeORM from '../database/connection';
 
-const Sequelize = require('sequelize');
+import User from './user';
+import Polls from './polls';
+import PollValues from './poll_values';
 
-const User = require('./user.ts');
-
-const Polls = require('./polls.ts');
-
-const PollValues = require('./poll_values.ts');
-
-const UserVotes = sequelize.define('UserVotes', {
+const UserVotes = sequelizeORM.define('UserVotes', {
   id: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
   },
 
   pollId: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
   },
 
   pollValueId: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
   },
 });
+export default UserVotes;
 
 UserVotes.hasMany(User, { as: 'user' });
 

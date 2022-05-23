@@ -1,43 +1,39 @@
-/* eslint-disable import/extensions */
-// eslint-disable-next-line import/no-unresolved
-import { sequelize } from '../database/connection';
+import { DataTypes } from 'sequelize';
+import sequelizeORM from '../database/connection';
 
-const Sequelize = require('sequelize');
+import Categories from './categories';
+import Provinces from './provinces';
+import User from './user';
 
-const Categories = require('./categories.ts');
-
-const Provinces = require('./provinces.ts');
-
-const User = require('./user.ts');
-
-const Posts = sequelize.define('Posts', {
+const Posts = sequelizeORM.define('Posts', {
   id: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
   },
 
   userId: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 
   categotyId: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   provinceId: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 
-  title: Sequelize.STRING(200),
+  title: DataTypes.STRING(200),
 
-  body: Sequelize.TEXT,
+  body: DataTypes.TEXT,
 
-  requiresSubscription: Sequelize.BOOLEAN,
+  requiresSubscription: DataTypes.BOOLEAN,
 });
+export default User;
 
 Posts.hasMany(Categories, { as: 'category' });
 

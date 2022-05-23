@@ -1,16 +1,14 @@
-/* eslint-disable import/extensions */
-// eslint-disable-next-line import/no-unresolved
-import { sequelize } from '../database/connection';
+import { DataTypes } from 'sequelize';
+import sequelizeORM from '../database/connection';
 
-const Sequelize = require('sequelize');
-
-exports = sequelize.define('SubscriptionsPrices', {
+const SubscriptionPrices = sequelizeORM.define('SubscriptionsPrices', {
   effectiveDate: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
   },
 
-  price: Sequelize.DECIMAL(10, 2),
+  price: DataTypes.DECIMAL(10, 2),
 });
+export default SubscriptionPrices;

@@ -1,13 +1,11 @@
-// eslint-disable-next-line import/extensions
 import User from './user';
-
-const Categories = require('./categories.ts');
-const PollValues = require('./poll_values.ts');
-const Polls = require('./polls.ts');
-const Posts = require('./posts.ts');
-const Provinces = require('./provinces.ts');
-const SubscriptionPrices = require('./subscriptions_prices.ts');
-const UserVotes = require('./user_votes.ts');
+import Categories from './categories';
+import PollValues from './poll_values';
+import Polls from './polls';
+import Provinces from './provinces';
+import SubscriptionPrices from './subscriptions_prices';
+import Posts from './posts';
+import UserVotes from './user_votes';
 
 export {
   Categories,
