@@ -1,30 +1,25 @@
-/* eslint-disable import/extensions */
-// eslint-disable-next-line import/no-unresolved
-import { sequelize } from '../database/connection';
+import { DataTypes } from 'sequelize';
+import sequelizeORM from '../database/connection';
 
-const Sequelize = require('sequelize');
+import Categories from './categories';
+import PollValues from './poll_values';
+import UserVotes from './user_votes';
 
-const Categories = require('./categories.ts');
-
-const PollValues = require('./poll_values.ts');
-
-const UserVotes = require('./user_votes.ts');
-
-const Polls = sequelize.define('Polls', {
+const Polls = sequelizeORM.define('Polls', {
   id: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
   },
 
   categotyId: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
   },
 
-  description: Sequelize.STRING(200),
+  description: DataTypes.STRING(200),
 });
 
 Polls.hasMany(Categories, { as: 'category' });
@@ -33,6 +28,7 @@ Polls.belongsTo(PollValues, {
   foreignKey: 'id',
   as: 'poll',
 });
+export default Polls;
 
 Polls.belongsTo(UserVotes, {
   foreignKey: 'id',

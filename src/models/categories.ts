@@ -1,23 +1,21 @@
-/* eslint-disable import/extensions */
-// eslint-disable-next-line import/no-unresolved
-import { sequelize } from '../database/connection';
+import { DataTypes } from 'sequelize';
+import sequelizeORM from '../database/connection';
 
-const Sequelize = require('sequelize');
+import Polls from "./polls";
+import Posts from "./posts";
 
-const Polls = require('./polls.ts');
-
-const Posts = require('./posts.ts');
-
-const Categories = sequelize.define('Categories', {
+const Categories = sequelizeORM.define('Categories', {
   id: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
   },
 
-  name: Sequelize.STRING(200),
+  name: DataTypes.STRING(200),
 });
+
+export default Categories;
 
 Categories.belongsTo(Polls, {
   foreignKey: 'id',
