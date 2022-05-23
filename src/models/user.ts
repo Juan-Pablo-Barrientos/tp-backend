@@ -1,37 +1,37 @@
 /* eslint-disable import/extensions */
 // eslint-disable-next-line import/no-unresolved
-import { sequelize } from '../database/connection';
+import { DataTypes } from 'sequelize';
 
-const Sequelize = require('sequelize');
+import { sequelizeORM } from '../database/connection';
 
 const Posts = require('./posts.ts');
 
 const UserVotes = require('./user_votes.ts');
 
-const User = sequelize.define('User', {
+const User = sequelizeORM.define('User', {
   id: {
-    type: Sequelize.INTEGER(11),
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
   },
 
-  name: Sequelize.STRING(200),
+  name: DataTypes.STRING(200),
 
-  surname: Sequelize.STRING(200),
+  surname: DataTypes.STRING(200),
 
   username: {
-    type: Sequelize.STRING(45),
+    type: DataTypes.STRING(45),
     allowNull: false,
   },
 
   role: {
-    type: Sequelize.STRING(45),
+    type: DataTypes.STRING(45),
     allowNull: false,
   },
 
-  phoneNumber: Sequelize.STRING(45),
-  subscribedUntil: Sequelize.DATE,
+  phoneNumber: DataTypes.STRING(45),
+  subscribedUntil: DataTypes.DATE,
 });
 
 User.belongsTo(Posts, {
@@ -43,3 +43,5 @@ User.belongsTo(UserVotes, {
   foreignKey: 'id',
   as: 'uservote',
 });
+
+export default User;
