@@ -1,8 +1,7 @@
 import express from "express";
 const router = express.Router();
-//import userControllers from "../controllers/userControllers";
+import * as userControllers from "../controllers/userControllers";
 
-//router.get("/", userControllers.getCategories);
-//router.post("/", userControllers.addCaregories);
+router.get("/", userControllers.getUserById);
 
 export default router;
