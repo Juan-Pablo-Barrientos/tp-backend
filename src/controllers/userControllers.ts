@@ -52,4 +52,7 @@ const addUser = async (req: any , res: any) => {
 
 }
 // eslint-disable-next-line import/prefer-default-export
-export { getUserById, addUser };
+const findAll = async()=>{
+  return await models.User.findAll();
+}
+export { getUserById, addUser,findAll };
