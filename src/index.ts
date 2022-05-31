@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import { getUserById } from './controllers/userControllers';
+import { getAllUser, getUserById } from './controllers/userControllers';
 
 dotenv.config();
 
@@ -9,8 +9,8 @@ const port = process.env.PORT;
 
 app.get('/', (req: Request, res: Response) => {
   //res.send('testeando que ande');
-  res.send(getUserById(1,2));
-  console.log(getUserById(1,2));
+  res.send(getAllUser(1,2));
+  console.log(getAllUser(1,2));
 });
 
 app.listen(port, () => {

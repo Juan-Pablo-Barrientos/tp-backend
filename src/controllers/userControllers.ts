@@ -19,6 +19,15 @@ const getUserById = async (req: any, res: any) => {
   }
 };
 
+const getAllUser = async (req: any, res: any) => {
+  try {
+      const response = await models.User.findAll();
+      return res.status(200).json({ data: response, error: false });
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
+  }
+};
+
 const addUser = async (req: any , res: any) => {
   try {
       const name = req.body.name;
@@ -52,4 +61,4 @@ const addUser = async (req: any , res: any) => {
 
 }
 // eslint-disable-next-line import/prefer-default-export
-export { getUserById, addUser };
+export { getUserById, addUser , getAllUser };
