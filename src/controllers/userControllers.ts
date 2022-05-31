@@ -61,4 +61,6 @@ const addUser = async (req: any , res: any) => {
 
 }
 // eslint-disable-next-line import/prefer-default-export
+
 export { getUserById, addUser , getAllUser };
+
