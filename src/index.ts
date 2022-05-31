@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import { getUserById } from './controllers/userControllers';
 
 dotenv.config();
 
@@ -8,6 +9,7 @@ const port = process.env.PORT;
 
 app.get('/', (req: Request, res: Response) => {
   res.send('testeando que ande');
+  res.send(getUserById(1,2))
 });
 
 app.listen(port, () => {
