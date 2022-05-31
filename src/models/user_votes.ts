@@ -26,9 +26,10 @@ const UserVotes = sequelizeORM.define('UserVotes', {
   },
 });
 export default UserVotes;
-
+/*
 UserVotes.hasMany(User, { as: 'user' });
 
 UserVotes.hasMany(Polls, { as: 'poll' });
 
 UserVotes.hasMany(PollValues, { as: 'pollvalue' });
+*/

@@ -29,7 +29,7 @@ const User = sequelizeORM.define('User', {
   phoneNumber: DataTypes.STRING(45),
   subscribedUntil: DataTypes.DATE,
 });
-
+/*
 User.belongsTo(Posts, {
   foreignKey: 'id',
   as: 'post',
@@ -39,5 +39,6 @@ User.belongsTo(UserVotes, {
   foreignKey: 'id',
   as: 'uservote',
 });
+*/
 
 export default User;

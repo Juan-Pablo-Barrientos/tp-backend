@@ -8,8 +8,9 @@ const app: Express = express();
 const port = process.env.PORT;
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('testeando que ande');
-  res.send(getUserById(1,2))
+  //res.send('testeando que ande');
+  res.send(getUserById(1,2));
+  console.log(getUserById(1,2));
 });
 
 app.listen(port, () => {

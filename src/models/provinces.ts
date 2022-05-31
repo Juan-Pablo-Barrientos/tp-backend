@@ -14,8 +14,9 @@ const Provinces = sequelizeORM.define('Provinces', {
   name: DataTypes.STRING(200),
 });
 export default Provinces;
-
+/*
 Provinces.belongsTo(Posts, {
   foreignKey: 'id',
   as: 'post',
 });
+*/

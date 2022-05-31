@@ -21,16 +21,18 @@ const Polls = sequelizeORM.define('Polls', {
 
   description: DataTypes.STRING(200),
 });
-
+export default Polls;
+/*
 Polls.hasMany(Categories, { as: 'category' });
 
 Polls.belongsTo(PollValues, {
   foreignKey: 'id',
   as: 'poll',
 });
-export default Polls;
+
 
 Polls.belongsTo(UserVotes, {
   foreignKey: 'id',
   as: 'uservote',
 });
+*/

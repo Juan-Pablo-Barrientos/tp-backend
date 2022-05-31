@@ -16,7 +16,7 @@ const Categories = sequelizeORM.define('Categories', {
 });
 
 export default Categories;
-
+/*
 Categories.belongsTo(Polls, {
   foreignKey: 'id',
   as: 'poll',
@@ -26,3 +26,4 @@ Categories.belongsTo(Posts, {
   foreignKey: 'id',
   as: 'post',
 });
+*/

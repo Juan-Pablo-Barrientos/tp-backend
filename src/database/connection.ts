@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import { Sequelize } from 'sequelize/types';
+import { Sequelize } from 'sequelize';
 
 // eslint-disable-next-line import/prefer-default-export
 const sequelizeORM = new Sequelize('prueba', 'JuanPabloBarrientos', 'password', { host: 'localhost', dialect: 'mysql' });
