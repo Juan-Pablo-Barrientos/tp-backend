@@ -4,7 +4,7 @@ import * as models from '../models/index';
 // eslint-disable-next-line consistent-return
 const getUserById = async (req: any, res: any) => {
   try {
-    const userID = req.params.id;
+    const userID = req.query.id;
     const response = await models.User.findByPk(userID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });

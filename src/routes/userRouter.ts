@@ -2,6 +2,6 @@ import express from "express";
 const router = express.Router();
 import * as userControllers from "../controllers/userControllers";
 
-router.get("/:id", userControllers.getUserById);
+router.get("/", userControllers.getUserById);
 
 export default router;
