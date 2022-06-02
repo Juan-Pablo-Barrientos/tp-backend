@@ -13,6 +13,10 @@ const Provinces = sequelizeORM.define('Provinces', {
 
   name: DataTypes.STRING(200),
 });
+Provinces.hasMany(Posts,{
+  foreignKey:'provinceId',
+  as:'post'
+});
 export default Provinces;
 /*
 Provinces.belongsTo(Posts, {

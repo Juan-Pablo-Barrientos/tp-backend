@@ -33,6 +33,9 @@ const Posts = sequelizeORM.define('Posts', {
 
   requiresSubscription: DataTypes.BOOLEAN,
 });
+Posts.belongsTo(User);
+Posts.belongsTo(Categories);
+Posts.belongsTo(Provinces);
 export default User;
 /*
 Posts.hasMany(Categories, { as: 'category' });

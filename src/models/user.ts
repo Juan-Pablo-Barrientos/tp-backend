@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelizeORM from '../database/connection';
+import PollValues from './poll_values';
 
 import Posts from './posts';
 import UserVotes from './user_votes';
@@ -28,6 +29,14 @@ const User = sequelizeORM.define('users', {
 
   phoneNumber: DataTypes.STRING(45),
   subscribedUntil: DataTypes.DATE,
+});
+User.hasMany(Posts,{
+    foreignKey:'userId',
+    as:'post'
+});
+User.hasMany(UserVotes,{
+  foreignKey:'userId',
+  as:'user'
 });
 /*
 User.belongsTo(Posts, {

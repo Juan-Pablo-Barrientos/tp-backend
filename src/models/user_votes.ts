@@ -25,6 +25,19 @@ const UserVotes = sequelizeORM.define('UserVotes', {
     primaryKey: true,
   },
 });
+UserVotes.belongsTo(User,{
+  foreignKey:'id',
+  as:'user'
+});
+UserVotes.belongsTo(Polls,{
+  foreignKey:'id',
+  as:'poll'
+});
+UserVotes.belongsTo(PollValues,{
+  foreignKey:'id',
+  as:'pollValue'
+});
+
 export default UserVotes;
 /*
 UserVotes.hasMany(User, { as: 'user' });
