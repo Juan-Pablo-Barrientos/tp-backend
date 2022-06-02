@@ -4,7 +4,8 @@ import * as models from '../models/index';
 // eslint-disable-next-line consistent-return
 const getUserById = async (req: any, res: any) => {
   try {
-    const userID = req.query.id;
+    const userID = req.body.id;
+    console.log(userID);
     const response = await models.User.findByPk(userID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
@@ -15,7 +16,7 @@ const getUserById = async (req: any, res: any) => {
       return res.status(404).json({ msg: `User not found.`, error: true });
     }
   } catch (error) {
-    return res.status(500).json({ msg: "q pachooo", error: true });
+    return res.status(500).json({ msg: error, error: true });
   }
 };
 
