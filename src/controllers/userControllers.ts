@@ -4,8 +4,7 @@ import * as models from '../models/index';
 // eslint-disable-next-line consistent-return
 const getUserById = async (req: any, res: any) => {
   try {
-    const userID = req.body.id;
-    console.log(userID);
+    const userID = req.params.id;   
     const response = await models.User.findByPk(userID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
@@ -31,12 +30,12 @@ const getAllUser = async (req:any, res:any) => {
 
 const addUser = async (req: any , res: any) => {
   try {
-      const name = "jane";
-      const surname ="Doe";
-      const username = "wacho";
-      const role = "wacho";
-      const phoneNumber = "123";
-      const subscribedUntil="2025-12-12"
+      const name = req.body.name;
+      const surname =req.body.surname;
+      const username = req.body.username;
+      const role = req.body.role;
+      const phoneNumber = req.body.phoneNumber;
+      const subscribedUntil=req.body.subscribedUntil;
       
       if (!name) {
         return res.status(400).json({ msg: "name field is required.", error: true });
@@ -53,14 +52,7 @@ const addUser = async (req: any , res: any) => {
       if (!phoneNumber) {
           return res.status(400).json({ msg: "phoneNumber field is required.", error: true });
       }  
-      const userInstance = models.User.build({
-       name:  name ,
-       surname: surname, 
-       username: username, 
-       role: role, 
-       phoneNumber: phoneNumber,
-       subscribedUntil:subscribedUntil
-      });
+      const userInstance = models.User.build(req.body);
       await userInstance.save();
       res.status(200).json({ data: userInstance, error: false });
 
@@ -69,7 +61,39 @@ const addUser = async (req: any , res: any) => {
   }
 
 }
+const updateUser = async (req: any , res: any) => {
+  try {
+      const userID = req.params.id;
+      const user = await models.User.findByPk(userID);
+      
+      if (user) {
+          res.status(200).json({ data: user, error: false });
+          user.set(req.body);
+          await user.save();
+      }
+      else {
+          res.status(404).json({ msg: 'User not found', error: true });
+      }
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
+  }
+}
+
+const deleteUser = async (req: any , res: any) => {
+  try {
+      const userID = req.params.id;
+      const user = await models.User.findByPk(userID);
+      if (user) {
+          await user.destroy();
+          res.status(200).json({ data: user, error: false, msg: "User deleted successfully." });         
+      } else {
+          res.status(404).json({ msg: 'User not found', error: true });
+      }
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
+  }
+}
 // eslint-disable-next-line import/prefer-default-export
 
-export { getUserById, addUser , getAllUser };
+export { getUserById, addUser , getAllUser , updateUser , deleteUser};
 

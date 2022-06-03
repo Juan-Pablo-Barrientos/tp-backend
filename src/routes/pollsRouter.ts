@@ -1,8 +1,10 @@
 import express from "express";
 const router = express.Router();
-//import pollsControllers from "../controllers/pollsControllers";
+import * as pollsControllers from "../controllers/pollsControllers";
 
-//router.get("/", pollsControllers.getCategories);
-//router.post("/", pollsControllers.addCaregories);
-
+router.post("/", pollsControllers.addPolls);
+router.get("/:id",pollsControllers.getPollsById);
+router.get("/",pollsControllers.getAllPolls);
+router.put("/:id", pollsControllers.updatePolls);
+router.delete("/:id", pollsControllers.deletePolls);
 export default router;

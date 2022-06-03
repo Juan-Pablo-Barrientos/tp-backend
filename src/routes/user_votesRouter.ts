@@ -1,8 +1,11 @@
 import express from "express";
 const router = express.Router();
-//import user_votesControllers from "../controllers/user_votesControllers";
+import * as user_votesControllers from "../controllers/user_votesControllers";
 
-//router.get("/", user_votesControllers.getCategories);
-//router.post("/", user_votesControllers.addCaregories);
+router.post("/", user_votesControllers.addUserVotes);
+router.get("/:id",user_votesControllers.getUserVotesById);
+router.get("/",user_votesControllers.getAllUserVotes);
+router.put("/:id", user_votesControllers.updateUserVotes);
+router.delete("/:id", user_votesControllers.deleteUserVotes);
 
 export default router;

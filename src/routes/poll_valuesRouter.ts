@@ -1,8 +1,8 @@
 import express from "express";
 const router = express.Router();
-//import poll_valuesController from "../controllers/poll_valuesControllers";
+import * as poll_valuesController from "../controllers/poll_valuesControllers";
 
-//router.get("/", poll_valuesController.getCategories);
-//router.post("/", poll_valuesController.addCaregories);
+router.get("/:id", poll_valuesController.addPollValues);
+router.post("/", poll_valuesController.getPollValuesById);
 
 export default router;

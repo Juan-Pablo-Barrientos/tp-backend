@@ -1,8 +1,8 @@
 import express from "express";
 const router = express.Router();
-//import subscription_pricesControllers from "../controllers/subscription_pricesControllers";
+import * as subscription_pricesControllers from "../controllers/subscription_pricesControllers";
 
-//router.get("/", subscription_pricesControllers.getCategories);
-//router.post("/", subscription_pricesControllers.addCaregories);
+router.get("/:effectiveDate", subscription_pricesControllers.getPriceByDate);
+router.post("/", subscription_pricesControllers.addPrice);
 
 export default router;

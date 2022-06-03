@@ -1,8 +1,11 @@
 import express from "express";
 const router = express.Router();
-//import postsControllers from "../controllers/postsControllers";
+import * as postsControllers from "../controllers/postsControllers";
 
-//router.get("/", postsControllers.getCategories);
-//router.post("/", postsControllers.addCaregories);
+router.post("/", postsControllers.addPosts);
+router.get("/:id",postsControllers.getPostsById);
+router.get("/",postsControllers.getAllPosts);
+router.put("/:id", postsControllers.updatePosts);
+router.delete("/:id", postsControllers.deletePosts);
 
 export default router;
