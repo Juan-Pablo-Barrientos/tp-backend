@@ -15,22 +15,9 @@ const Categories = sequelizeORM.define('Categories', {
   name: DataTypes.STRING(200),
 });
 Categories.hasMany(Posts,{
-  foreignKey:'categoryId',
-  as:'post'
+  foreignKey:'categoryId'
 });
 Categories.hasMany(Polls,{
-  foreignKey:'categoryId',
-  as:'poll'
+  foreignKey:'categoryId'
 });
 export default Categories;
-/*
-Categories.belongsTo(Polls, {
-  foreignKey: 'id',
-  as: 'poll',
-});
-
-Categories.belongsTo(Posts, {
-  foreignKey: 'id',
-  as: 'post',
-});
-*/

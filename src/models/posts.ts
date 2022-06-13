@@ -37,10 +37,3 @@ Posts.belongsTo(User);
 Posts.belongsTo(Categories);
 Posts.belongsTo(Provinces);
 export default User;
-/*
-Posts.hasMany(Categories, { as: 'category' });
-
-Posts.hasMany(Provinces, { as: 'province' });
-
-Posts.hasMany(User, { as: 'user' });
-*/

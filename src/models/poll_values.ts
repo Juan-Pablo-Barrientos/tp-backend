@@ -21,16 +21,7 @@ const PollValues = sequelizeORM.define('PollValues', {
   description: DataTypes.STRING(200),
 });
 PollValues.hasMany(UserVotes,{
-  foreignKey:'pollValueId',
-  as:'userVote'
+  foreignKey:'pollValueId'
 });
 PollValues.belongsTo(Polls);
 export default PollValues;
-/*
-PollValues.hasMany(Polls, { as: 'pollvalue' });
-
-PollValues.belongsTo(UserVotes, {
-  foreignKey: 'id',
-  as: 'uservote',
-});
-*/

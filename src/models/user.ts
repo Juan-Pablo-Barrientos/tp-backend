@@ -31,23 +31,9 @@ const User = sequelizeORM.define('users', {
   subscribedUntil: DataTypes.DATE,
 });
 User.hasMany(Posts,{
-    foreignKey:'userId',
-    as:'post'
+    foreignKey:'userId'
 });
 User.hasMany(UserVotes,{
-  foreignKey:'userId',
-  as:'user'
+  foreignKey:'userId'
 });
-/*
-User.belongsTo(Posts, {
-  foreignKey: 'id',
-  as: 'post',
-});
-
-User.belongsTo(UserVotes, {
-  foreignKey: 'id',
-  as: 'uservote',
-});
-*/
-
 export default User;
