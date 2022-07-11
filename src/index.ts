@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import routesIndex from './routes/index'
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import sequelizeORM from './database/connection';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(routesIndex);
 app.get('/', (req: Request, res: Response) => {  
       res.send("tsteando")
+      
 });
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

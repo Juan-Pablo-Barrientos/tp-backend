@@ -3,7 +3,7 @@ import sequelizeORM from '../database/connection';
 
 import Posts from './posts';
 
-const Provinces = sequelizeORM.define('Provinces', {
+const Provinces = sequelizeORM.define('Province', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -12,8 +12,5 @@ const Provinces = sequelizeORM.define('Provinces', {
   },
 
   name: DataTypes.STRING(200),
-});
-Provinces.hasMany(Posts,{
-  foreignKey:'provinceId'
 });
 export default Provinces;

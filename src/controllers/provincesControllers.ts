@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/extensions
 import * as models from '../models/index';
+import { getAllCities } from './cityController';
 
 // eslint-disable-next-line consistent-return
 const getProvincesById = async (req: any, res: any) => {
@@ -35,4 +36,13 @@ const addProvinces = async (req: any , res: any) => {
     } 
 
   }
-  export { addProvinces,getProvincesById}
+
+  const getAllProvinces = async (req:any, res:any) => {
+    try {
+        const response = await models.Provinces.findAll({include:models.City});
+        return res.status(200).json({ data: response, error: false });
+    } catch (error) {
+        return res.status(500).json({ msg: error, error: true });
+    }
+  };
+  export { addProvinces,getProvincesById,getAllProvinces}

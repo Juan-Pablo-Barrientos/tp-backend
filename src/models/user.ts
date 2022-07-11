@@ -29,11 +29,8 @@ const User = sequelizeORM.define('users', {
 
   phoneNumber: DataTypes.STRING(45),
   subscribedUntil: DataTypes.DATE,
-});
-User.hasMany(Posts,{
-    foreignKey:'userId'
-});
-User.hasMany(UserVotes,{
-  foreignKey:'userId'
-});
+});/*
+User.hasMany(Posts);
+User.hasMany(UserVotes);
+*/
 export default User;

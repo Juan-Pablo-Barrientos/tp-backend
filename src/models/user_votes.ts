@@ -24,8 +24,8 @@ const UserVotes = sequelizeORM.define('UserVotes', {
     allowNull: false,
     primaryKey: true,
   },
-});
+});/*
 UserVotes.belongsTo(User);
 UserVotes.belongsTo(Polls);
-UserVotes.belongsTo(PollValues);
+UserVotes.belongsTo(PollValues);*/
 export default UserVotes;

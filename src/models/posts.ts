@@ -13,27 +13,18 @@ const Posts = sequelizeORM.define('Posts', {
     primaryKey: true,
   },
 
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-
-  categotyId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  provinceId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-
   title: DataTypes.STRING(200),
 
   body: DataTypes.TEXT,
 
   requiresSubscription: DataTypes.BOOLEAN,
 });
+Categories.hasMany(Posts);
+Provinces.hasMany(Posts);
+User.hasMany(Posts);
+
 Posts.belongsTo(User);
-Posts.belongsTo(Categories);
 Posts.belongsTo(Provinces);
-export default User;
+Posts.belongsTo(Categories);
+
+export default Posts;

@@ -21,7 +21,9 @@ const getPostsById = async (req: any, res: any) => {
 
 const getAllPosts = async (req:any, res:any) => {
   try {
-      const response = await models.Posts.findAll();
+      const response = await models.Posts.findAll({
+       include:[models.User]
+      });
       return res.status(200).json({ data: response, error: false });
   } catch (error) {
       return res.status(500).json({ msg: error, error: true });
