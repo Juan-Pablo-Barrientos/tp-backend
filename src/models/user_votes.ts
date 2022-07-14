@@ -5,27 +5,13 @@ import User from './user';
 import Polls from './polls';
 import PollValues from './poll_values';
 
-const UserVotes = sequelizeORM.define('UserVotes', {
-  id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-  },
+const UserVotes = sequelizeORM.define('user_votes', {});
+UserVotes.removeAttribute('id');
 
-  pollId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-  },
-
-  pollValueId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-  },
-});/*
+Polls.hasMany(UserVotes);
+PollValues.hasMany(UserVotes);
+User.hasMany(UserVotes);
 UserVotes.belongsTo(User);
 UserVotes.belongsTo(Polls);
-UserVotes.belongsTo(PollValues);*/
+UserVotes.belongsTo(PollValues);
 export default UserVotes;

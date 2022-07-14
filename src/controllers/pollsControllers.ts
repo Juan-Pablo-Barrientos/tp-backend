@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/extensions
+import { Model } from 'sequelize/types';
 import * as models from '../models/index';
 
 // eslint-disable-next-line consistent-return
@@ -21,7 +22,9 @@ const getPollsById = async (req: any, res: any) => {
 
 const getAllPolls = async (req:any, res:any) => {
   try {
-      const response = await models.Polls.findAll();
+      const response = await models.Polls.findAll({
+        include:models.UserVotes
+      });
       return res.status(200).json({ data: response, error: false });
   } catch (error) {
       return res.status(500).json({ msg: error, error: true });

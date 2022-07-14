@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelizeORM from '../database/connection';
 
-const SubscriptionPrices = sequelizeORM.define('SubscriptionsPrices', {
+const SubscriptionPrices = sequelizeORM.define('subscriptions_prices', {
   effectiveDate: {
     type: DataTypes.DATE,
     allowNull: false,

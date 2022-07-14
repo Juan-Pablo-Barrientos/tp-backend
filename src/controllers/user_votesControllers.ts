@@ -5,7 +5,7 @@ import * as models from '../models/index';
 const getUserVotesById = async (req: any, res: any) => {
   try {
     const userVotesID = req.params.id;   
-    const response = await models.User.findByPk(userVotesID);
+    const response = await models.UserVotes.findByPk(userVotesID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     // eslint-disable-next-line brace-style
@@ -21,7 +21,7 @@ const getUserVotesById = async (req: any, res: any) => {
 
 const getAllUserVotes = async (req:any, res:any) => {
   try {
-      const response = await models.User.findAll();
+      const response = await models.UserVotes.findAll();
       return res.status(200).json({ data: response, error: false });
   } catch (error) {
       return res.status(500).json({ msg: error, error: true });
@@ -39,7 +39,7 @@ const addUserVotes = async (req: any , res: any) => {
       if (!pollValueId) {
           return res.status(400).json({ msg: "pollValueId field is required.", error: true });
       }      
-      const userVoteInstance = models.User.build(req.body);
+      const userVoteInstance = models.UserVotes.build(req.body);
       await userVoteInstance.save();
       res.status(200).json({ data: userVoteInstance, error: false });
 
@@ -51,7 +51,7 @@ const addUserVotes = async (req: any , res: any) => {
 const updateUserVotes = async (req: any , res: any) => {
   try {
       const userVotesID = req.params.id;
-      const userVotes = await models.User.findByPk(userVotesID);
+      const userVotes = await models.UserVotes.findByPk(userVotesID);
       
       if (userVotes) {
           res.status(200).json({ data: userVotes, error: false });
@@ -69,7 +69,7 @@ const updateUserVotes = async (req: any , res: any) => {
 const deleteUserVotes = async (req: any , res: any) => {
   try {
       const userVotesID = req.params.id;
-      const userVotes = await models.User.findByPk(userVotesID);
+      const userVotes = await models.UserVotes.findByPk(userVotesID);
       if (userVotes) {
           await userVotes.destroy();
           res.status(200).json({ data: userVotes, error: false, msg: "User vote deleted successfully." });         

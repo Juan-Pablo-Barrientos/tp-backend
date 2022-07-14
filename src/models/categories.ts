@@ -13,7 +13,5 @@ const Categories = sequelizeORM.define('Categories', {
   },
 
   name: DataTypes.STRING(200),
-});/*
-Categories.hasMany(Posts);
-Categories.hasMany(Polls);*/
+});
 export default Categories;

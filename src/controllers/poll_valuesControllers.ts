@@ -5,7 +5,7 @@ import * as models from '../models/index';
 const getPollValuesById = async (req: any, res: any) => {
   try {
     const pollValuesID = req.params.id;   
-    const response = await models.User.findByPk(pollValuesID);
+    const response = await models.PollValues.findByPk(pollValuesID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     // eslint-disable-next-line brace-style
@@ -28,7 +28,7 @@ const addPollValues = async (req: any , res: any) => {
         if (!description) {
             return res.status(400).json({ msg: "description field is required.", error: true });
         }  
-        const pollValueInstance = models.User.build(req.body);
+        const pollValueInstance = models.PollValues.build(req.body);
         await pollValueInstance.save();
         res.status(200).json({ data: pollValueInstance, error: false });
   

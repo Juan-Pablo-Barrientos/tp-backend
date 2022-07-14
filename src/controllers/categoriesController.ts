@@ -5,7 +5,7 @@ import * as models from '../models/index';
 const getCategoriesById = async (req: any, res: any) => {
   try {
     const getCategoriesById = req.params.id;   
-    const response = await models.User.findByPk(getCategoriesById);
+    const response = await models.Categories.findByPk(getCategoriesById);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     // eslint-disable-next-line brace-style
@@ -24,7 +24,7 @@ const addCategories = async (req: any , res: any) => {
         if (!name) {
             return res.status(400).json({ msg: "name field is required.", error: true });
         }     
-        const pollValueInstance = models.User.build(req.body);
+        const pollValueInstance = models.Categories.build(req.body);
         await pollValueInstance.save();
         res.status(200).json({ data: pollValueInstance, error: false });
   

@@ -12,17 +12,9 @@ const Polls = sequelizeORM.define('Polls', {
     autoIncrement: true,
     primaryKey: true,
   },
-
-  categotyId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-  },
-
   description: DataTypes.STRING(200),
-});/*
-Polls.hasMany(PollValues);
-Polls.hasMany(UserVotes);
-*/
-//Polls.belongsTo(Categories);
+});
+
+Categories.hasMany(Polls);
+Polls.belongsTo(Categories);
 export default Polls;

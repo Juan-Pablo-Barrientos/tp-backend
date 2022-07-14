@@ -4,7 +4,7 @@ import * as models from '../models/index';
 // eslint-disable-next-line consistent-return
 const getPriceByDate = async (req: any, res: any) => {
   try {  
-    const response = await models.User.findOne({ where: { effectiveDate: req.params} });
+    const response = await models.SubscriptionPrices.findOne({ where: { effectiveDate: req.params} });
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     // eslint-disable-next-line brace-style
@@ -28,7 +28,7 @@ const addPrice = async (req: any , res: any) => {
         if (!price) {
             return res.status(400).json({ msg: "price field is required.", error: true });
         }  
-        const userInstance = models.User.build(req.body);
+        const userInstance = models.SubscriptionPrices.build(req.body);
         await userInstance.save();
         res.status(200).json({ data: userInstance, error: false });
   
