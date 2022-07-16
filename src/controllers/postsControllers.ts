@@ -1,5 +1,8 @@
 // eslint-disable-next-line import/extensions
+import { request } from 'express';
+import { IntegerDataType } from 'sequelize/types';
 import * as models from '../models/index';
+
 
 // eslint-disable-next-line consistent-return
 const getPostsById = async (req: any, res: any) => {
@@ -19,10 +22,19 @@ const getPostsById = async (req: any, res: any) => {
   }
 };
 
-const getAllPosts = async (req:any, res:any) => {
+const getAllPosts = async (req:any, res:any) => { 
+  const autorId = req.query.autorId;
+  const categoryId=req.query.categoryId;
+  let conditions  = [{}];
+  if(categoryId!=null){
+    conditions.push({categoryId:categoryId});
+    ;}
+  if(autorId!=null){
+    conditions.push({userId:autorId});
+    ;}
   try {
       const response = await models.Posts.findAll({
-       include:[models.User]
+        where:conditions
       });
       return res.status(200).json({ data: response, error: false });
   } catch (error) {

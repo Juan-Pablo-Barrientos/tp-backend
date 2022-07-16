@@ -21,9 +21,14 @@ const getPollsById = async (req: any, res: any) => {
 };
 
 const getAllPolls = async (req:any, res:any) => {
+ const categoryId = req.query.categoryId;
+ let conditions =[{}];
+ if (categoryId!=null){
+  conditions.push({categoryId:categoryId});
+ }
   try {
       const response = await models.Polls.findAll({
-        include:models.UserVotes
+        where: conditions
       });
       return res.status(200).json({ data: response, error: false });
   } catch (error) {

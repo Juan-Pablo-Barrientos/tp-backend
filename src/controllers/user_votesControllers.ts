@@ -30,9 +30,13 @@ const getAllUserVotes = async (req:any, res:any) => {
 
 const addUserVotes = async (req: any , res: any) => {
   try {
+      const userId =req.body.userId;
       const pollId = req.body.pollId;
       const pollValueId =req.body.pollValueId;
 
+      if (!userId) {
+        return res.status(400).json({ msg: "userId field is required.", error: true });
+    }
       if (!pollId) {
         return res.status(400).json({ msg: "pollId field is required.", error: true });
     }
@@ -50,6 +54,7 @@ const addUserVotes = async (req: any , res: any) => {
 }
 const updateUserVotes = async (req: any , res: any) => {
   try {
+      
       const userVotesID = req.params.id;
       const userVotes = await models.UserVotes.findByPk(userVotesID);
       
