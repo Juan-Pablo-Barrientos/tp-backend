@@ -11,7 +11,7 @@ const getPriceByDate = async (req: any, res: any) => {
     }
     // eslint-disable-next-line no-else-return
     else {
-      return res.status(404).json({ msg: `User not found.`, error: true });
+      return res.status(404).json({ msg: `Price not found.`, error: true });
     }
   } catch (error) {
     return res.status(500).json({ msg: error, error: true });
@@ -36,5 +36,29 @@ const addPrice = async (req: any , res: any) => {
         return res.status(500).json({ msg: error, error: true });
     }
   
+  };
+
+const getAllPrice = async (req:any, res:any) => {
+  try {
+      const response = await models.SubscriptionPrices.findAll();
+      return res.status(200).json({ data: response, error: false });
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
   }
-export { getPriceByDate , addPrice };
+}
+
+const deletePrice = async (req: any , res: any) => {
+  try {
+      const priceID = req.params.id;
+      const price = await models.SubscriptionPrices.findByPk(priceID);
+      if (price) {
+          await price.destroy();
+          res.status(200).json({ data: price, error: false, msg: "Price deleted successfully." });         
+      } else {
+          res.status(404).json({ msg: 'Price not found', error: true });
+      }
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
+  }
+}
+export { getPriceByDate , deletePrice, addPrice, getAllPrice };

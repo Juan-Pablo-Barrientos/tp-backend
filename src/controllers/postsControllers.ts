@@ -24,7 +24,7 @@ const getPostsById = async (req: any, res: any) => {
 
 const getAllPosts = async (req:any, res:any) => { 
   const autorId = req.query.autorId;
-  const categoryId=req.query.categoryId;
+  const categoryId= req.query.categoryId;
   let conditions  = [{}];
   if(categoryId!=null){
     conditions.push({categoryId:categoryId});
@@ -46,7 +46,7 @@ const addPosts = async (req: any , res: any) => {
   try {
       const name = req.body.name;
       const userId =req.body.userId;
-      const categotyId = req.body.categotyId;
+      const categoryId = req.body.categoryId;
       const provinceId = req.body.provinceId;
       const title = req.body.title;
       const body=req.body.body;
@@ -58,8 +58,8 @@ const addPosts = async (req: any , res: any) => {
       if (!userId) {
           return res.status(400).json({ msg: "userId field is required.", error: true });
       }
-      if (!categotyId) {
-          return res.status(400).json({ msg: "categotyId field is required.", error: true });
+      if (!categoryId) {
+          return res.status(400).json({ msg: "categoryId field is required.", error: true });
       }
       if (!provinceId) {
           return res.status(400).json({ msg: "provinceId field is required.", error: true });

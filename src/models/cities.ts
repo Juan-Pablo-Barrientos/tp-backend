@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import sequelizeORM from "../database/connection";
 import Provinces from "./provinces";
 
-const City = sequelizeORM.define("City", {
+const Cities = sequelizeORM.define("Cities", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -12,7 +12,7 @@ const City = sequelizeORM.define("City", {
 
   name: { type: DataTypes.STRING(200), allowNull: false }});
 
-Provinces.hasMany(City);
-City.belongsTo(Provinces);
+Provinces.hasMany(Cities);
+Cities.belongsTo(Provinces);
 
-export default City;
+export default Cities;

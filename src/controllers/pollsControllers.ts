@@ -38,10 +38,10 @@ const getAllPolls = async (req:any, res:any) => {
 
 const addPolls = async (req: any , res: any) => {
   try {
-      const categotyId = req.body.categotyId;
+      const categoryId = req.body.categoryId;
       const description =req.body.description;   
-      if (!categotyId) {
-        return res.status(400).json({ msg: "categotyId field is required.", error: true });
+      if (!categoryId) {
+        return res.status(400).json({ msg: "categoryId field is required.", error: true });
     }
       if (!description) {
           return res.status(400).json({ msg: "description field is required.", error: true });
@@ -90,4 +90,6 @@ const deletePolls = async (req: any , res: any) => {
 // eslint-disable-next-line import/prefer-default-export
 
 export { getPollsById, addPolls , getAllPolls , updatePolls , deletePolls};
+
+
 

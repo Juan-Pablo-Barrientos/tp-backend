@@ -5,8 +5,8 @@ import { getAllCities } from './cityController';
 // eslint-disable-next-line consistent-return
 const getProvincesById = async (req: any, res: any) => {
   try {
-    const ProvinceID = req.params.id;   
-    const response = await models.Provinces.findByPk(ProvinceID);
+    const provincesID = req.params.id;   
+    const response = await models.Provinces.findByPk(provincesID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     // eslint-disable-next-line brace-style
@@ -20,29 +20,61 @@ const getProvincesById = async (req: any, res: any) => {
   }
 };
 
+const getAllProvinces = async (req:any, res:any) => {
+  try {
+      const response = await models.Provinces.findAll();
+      return res.status(200).json({ data: response, error: false });
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
+  }
+};
+
 const addProvinces = async (req: any , res: any) => {
-    try {
-        const name = req.body.name;
-
-        if (!name) {
-          return res.status(400).json({ msg: "name field is required.", error: true });
-      }       
-        const ProvinceInstance = models.Provinces.build(req.body);
-        await ProvinceInstance.save();
-        res.status(200).json({ data: ProvinceInstance, error: false });
-  
-    } catch (error) {
-        return res.status(500).json({ msg: error, error: true });
+  try {
+      const name = req.body.name;
+      
+      if (!name) {
+        return res.status(400).json({ msg: "name field is required.", error: true });
     } 
+      const provinceInstance = models.Provinces.build(req.body);
+      await provinceInstance.save();
+      res.status(200).json({ data: provinceInstance, error: false });
 
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
   }
 
-  const getAllProvinces = async (req:any, res:any) => {
-    try {
-        const response = await models.Provinces.findAll({include:models.City});
-        return res.status(200).json({ data: response, error: false });
-    } catch (error) {
-        return res.status(500).json({ msg: error, error: true });
-    }
-  };
-  export { addProvinces,getProvincesById,getAllProvinces}
+}
+const updateProvinces = async (req: any , res: any) => {
+  try {
+      const provincesID = req.params.id;
+      const province = await models.Provinces.findByPk(provincesID);
+      
+      if (province) {
+          res.status(200).json({ data: province, error: false });
+          province.set(req.body);
+          await province.save();
+      }
+      else {
+          res.status(404).json({ msg: 'Province not found', error: true });
+      }
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
+  }
+}
+
+const deleteProvinces = async (req: any , res: any) => {
+  try {
+      const provincesID = req.params.id;
+      const province = await models.Provinces.findByPk(provincesID);
+      if (province) {
+          await province.destroy();
+          res.status(200).json({ data: province, error: false, msg: "Province deleted successfully." });         
+      } else {
+          res.status(404).json({ msg: 'Province not found', error: true });
+      }
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
+  }
+}
+  export {updateProvinces, deleteProvinces, addProvinces, getProvincesById, getAllProvinces}

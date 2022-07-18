@@ -6,7 +6,7 @@ import Provinces from './provinces';
 import SubscriptionPrices from './subscriptions_prices';
 import Posts from './posts';
 import UserVotes from './user_votes';
-import City from './city';
+import Cities from './cities';
 
 export {
   Categories,
@@ -17,5 +17,5 @@ export {
   UserVotes,
   User,
   Posts,
-  City
+  Cities
 };
