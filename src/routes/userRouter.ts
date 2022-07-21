@@ -2,9 +2,9 @@ import express from "express";
 const router = express.Router();
 import * as userControllers from "../controllers/userControllers";
 
-router.post("/", userControllers.addUser);
+router.put("/", userControllers.addUser);
 router.get("/:id",userControllers.getUserById);
 router.get("/",userControllers.getAllUser);
-router.put("/:id", userControllers.updateUser);
+router.patch("/:id", userControllers.updateUser);
 router.delete("/:id", userControllers.deleteUser);
 export default router;
