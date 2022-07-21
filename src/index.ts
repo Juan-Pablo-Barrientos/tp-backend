@@ -12,7 +12,7 @@ const port = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(routesIndex);
+app.use("/api/", routesIndex);
 app.get('/', (req: Request, res: Response) => {  
       res.send("tsteando")
       
