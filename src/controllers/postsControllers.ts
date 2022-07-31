@@ -116,5 +116,29 @@ const deletePosts = async (req: any , res: any) => {
 }
 // eslint-disable-next-line import/prefer-default-export
 
-export { getPostsById, addPosts , getAllPosts , updatePosts , deletePosts};
+
+const getPostsByIdWithAuthor = async (req: any, res: any) => {
+  try {
+    const PostsID = req.params.id;   
+    const response = await models.Posts.findByPk(PostsID,{
+      attributes: ['title','body'],
+      include: [{
+        model:models.User,
+        attributes: ['name','surname']
+      }],
+    });
+    if (response != null) {
+      return res.status(200).json({ data: response, error: false });
+    // eslint-disable-next-line brace-style
+    }
+    // eslint-disable-next-line no-else-return
+    else {
+      return res.status(404).json({ msg: `Posts not found.`, error: true });
+    }
+  } catch (error) {
+    return res.status(500).json({ msg: error, error: true });
+  }
+};
+
+export { getPostsById, addPosts , getAllPosts , updatePosts , deletePosts,getPostsByIdWithAuthor};
 

@@ -95,5 +95,30 @@ const deleteUser = async (req: any , res: any) => {
 }
 // eslint-disable-next-line import/prefer-default-export
 
-export { getUserById, addUser , getAllUser , updateUser , deleteUser};
+
+// eslint-disable-next-line consistent-return
+const getUserByIdWithPosts = async (req: any, res: any) => {
+  try {
+    const userID = req.params.id;   
+    const response = await models.User.findByPk(userID,{
+      attributes:['name','surname','bio'],
+      include:[{
+        model:models.Posts,
+        attributes:['title','body','requiresSubscription']
+    }]
+    });
+    if (response != null) {
+      return res.status(200).json({ data: response, error: false });
+    // eslint-disable-next-line brace-style
+    }
+    // eslint-disable-next-line no-else-return
+    else {
+      return res.status(404).json({ msg: `User not found.`, error: true });
+    }
+  } catch (error) {
+    return res.status(500).json({ msg: error, error: true });
+  }
+};
+
+export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts};
 

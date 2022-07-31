@@ -29,5 +29,6 @@ const User = sequelizeORM.define('users', {
 
   phoneNumber: DataTypes.STRING(45),
   subscribedUntil: DataTypes.DATE,
+  bio:DataTypes.TEXT
 });
 export default User;
