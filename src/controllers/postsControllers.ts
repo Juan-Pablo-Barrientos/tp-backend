@@ -44,15 +44,32 @@ const getAllPosts = async (req:any, res:any) => {
 
 const addPosts = async (req: any , res: any) => {
   try {
-      const name = req.body.name;
-      const userId =req.body.userId;
-      const categoryId = req.body.categoryId;
-      const provinceId = req.body.provinceId;
-      const title = req.body.title;
-      const body=req.body.body;
-      const requiresSubscription=req.body.requiresSubscription;
+      const authorName =  req.body.author;
+      const author= await models.User.findOne({
+        where:{
+          name: authorName,
+        }
+      });
+      const userId =  author?.getDataValue("id");
+      const categoryName =  req.body.category
+      const category= await models.Categories.findOne({
+        where:{
+          name: categoryName,
+        }
+      })
+      const categoryId =  category?.getDataValue("id")
+      const provinceName =  req.body.province
+      const province= await models.Provinces.findOne({
+        where:{
+          name: provinceName,
+        }
+      });
+      const provinceId =  province?.getDataValue("id")
+      const title =  req.body.title;
+      const body=  req.body.body;
+      const requiresSubscription=  req.body.sub;
       
-      if (!name) {
+      if (!authorName) {
         return res.status(400).json({ msg: "name field is required.", error: true });
     }
       if (!userId) {
@@ -73,12 +90,21 @@ const addPosts = async (req: any , res: any) => {
     if (!requiresSubscription) {
         return res.status(400).json({ msg: "requiresSubscription field is required.", error: true });
     }
-      const PostsInstance = models.Posts.build(req.body);
+
+      const PostsInstance = models.Posts.build({
+        userId:userId,
+        categoryId:categoryId,
+        provinceId:provinceId,
+        title:title,
+        body:body,
+        requiresSubscription:requiresSubscription
+  
+      });
       await PostsInstance.save();
-      res.status(200).json({ data: PostsInstance, error: false });
+      res.status(200).json({ data: PostsInstance, 'status':200 , error: false });
 
   } catch (error) {
-      return res.status(500).json({ msg: error, error: true });
+      return res.status(500).json({ msg: error, 'status':500 , error: true });
   }
 
 }
@@ -86,17 +112,37 @@ const updatePosts = async (req: any , res: any) => {
   try {
       const PostsID = req.params.id;
       const Posts = await models.Posts.findByPk(PostsID);
+      const categoryName =  req.body.category
+      const category= await models.Categories.findOne({
+        where:{
+          name: categoryName,
+        }
+      })
+      const categoryId =  category?.getDataValue("id")
+      const provinceName =  req.body.province
+      const province= await models.Provinces.findOne({
+        where:{
+          name: provinceName,
+        }
+      });
+      const provinceId =  province?.getDataValue("id")
       
       if (Posts) {
-          res.status(200).json({ data: Posts, error: false });
-          Posts.set(req.body);
+          res.status(200).json({ data: Posts,'status':200, error: false });
+          Posts.set({
+            categoryId:categoryId,
+            provinceId:provinceId,
+            title:req.body.title,
+            body:req.body.body,
+            requiresSubscription:req.body.sub
+          });
           await Posts.save();
       }
       else {
-          res.status(404).json({ msg: 'Posts not found', error: true });
+          res.status(404).json({ msg: 'Posts not found','status':404, error: true });
       }
   } catch (error) {
-      return res.status(500).json({ msg: error, error: true });
+      return res.status(500).json({ msg: error,'status':500, error: true });
   }
 }
 
@@ -106,12 +152,12 @@ const deletePosts = async (req: any , res: any) => {
       const Posts = await models.Posts.findByPk(PostsID);
       if (Posts) {
           await Posts.destroy();
-          res.status(200).json({ data: Posts, error: false, msg: "Post deleted successfully." });         
+          res.status(200).json({ data: Posts, error: false,'status':200, msg: "Post deleted successfully." });         
       } else {
-          res.status(404).json({ msg: 'Post not found', error: true });
+          res.status(404).json({ msg: 'Post not found','status':404, error: true });
       }
   } catch (error) {
-      return res.status(500).json({ msg: error, error: true });
+      return res.status(500).json({ msg: error,'status':500, error: true });
   }
 }
 // eslint-disable-next-line import/prefer-default-export

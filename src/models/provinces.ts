@@ -3,7 +3,7 @@ import sequelizeORM from '../database/connection';
 
 import Posts from './posts';
 
-const Provinces = sequelizeORM.define('Province', {
+const Provinces = sequelizeORM.define('province', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,

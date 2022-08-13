@@ -23,8 +23,8 @@ Categories.hasMany(Posts);
 Provinces.hasMany(Posts);
 User.hasMany(Posts);
 
-Posts.belongsTo(User);
 Posts.belongsTo(Provinces);
 Posts.belongsTo(Categories);
+Posts.belongsTo(User);
 
 export default Posts;

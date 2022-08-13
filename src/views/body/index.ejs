@@ -1,0 +1,42 @@
+<%- include('./../layouts/header.ejs', {title:'Las noticias del dia'}) -%>
+
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Noticias!!!!</h1>
+        </div>
+      </section>
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row justify-content-between">
+            <h4>Lista de Noticias</h4>
+            <a href="/create" class="btn btn-sm btn-success">Crear</a>
+          </div>
+          <div class="row">
+            <table class="table table-respondive table-hover text-center">
+              <thead>
+                <tr>
+                  <th>Titulo</th>
+                  <th>Cuerpo</th>
+                  <th>Autor</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% posts.forEach(post => { %>
+                  <tr>
+                    <td><%= post.title %></td>
+                    <td><%= post.body %></td>
+                    <td><%= post.user.name %></td>
+                    <td>
+                      <a class="btn btn-primary" href="/posts/show/<%= post.id %>">Ver detalles</a>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </main>
+<%- include('./../layouts/footer.ejs') -%>
