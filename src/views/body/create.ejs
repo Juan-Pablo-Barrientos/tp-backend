@@ -23,7 +23,7 @@
               <select class="form-control" id="category" name="category">
                 <option></option>
                 <% categories.forEach(categories => { %>
-                <option><%= categories.name %></option>
+                <option value="<%=categories.id  %>"><%= categories.name %></option>
                 <% }); %>
               </select>
             </div>
@@ -33,7 +33,7 @@
               <select class="form-control" id="province" name="province">
                 <option></option>
                 <% provinces.forEach(provinces => { %>
-                  <option><%= provinces.name %></option>
+                  <option value="<%=provinces.id  %>"><%= provinces.name %></option>
                 <% }); %>
               </select>
             </div>
@@ -43,7 +43,7 @@
               <select class="form-control" id="author" name="author">
                 <option></option>
                 <% authors.forEach(authors => { %>
-                  <option><%= authors.name %></option>
+                  <option value="<%=authors.id  %>"><%= authors.name %></option>
                 <% }); %>
               </select>
             </div>

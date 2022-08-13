@@ -15,8 +15,8 @@
                 <label for="category">Categoria</label>
                 <select class="form-control" id="category" name="category">
                   <% categories.forEach(categories => { %>
-                  <% if(categories.name==post.category.name){ %> <option selected><%= categories.name %></option>
-                    <% } else {%><option><%= categories.name %></option><%}%>
+                  <% if(categories.name==post.category.name){ %> <option  value="<%=categories.id  %>" selected><%= categories.name %></option>
+                    <% } else {%><option value="<%=categories.id  %>"><%= categories.name %></option><%}%>
                   <% }); %>
                 </select>
               </div>
@@ -25,8 +25,8 @@
                 <label for="province">Provincia</label>
                 <select class="form-control" id="province" name="province">
                   <% provinces.forEach(provinces => { %>
-                  <% if(provinces.name==post.province.name){ %> <option selected><%= provinces.name %></option>
-                    <% } else {%><option><%= provinces.name %></option><%}%>
+                  <% if(provinces.name==post.province.name){ %> <option value="<%=provinces.id  %>" selected><%= provinces.name %></option>
+                    <% } else {%><option value="<%=provinces.id  %>"><%= provinces.name %></option><%}%>
                   <% }); %>
                 </select>
               </div>

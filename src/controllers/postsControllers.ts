@@ -44,34 +44,13 @@ const getAllPosts = async (req:any, res:any) => {
 
 const addPosts = async (req: any , res: any) => {
   try {
-      const authorName =  req.body.author;
-      const author= await models.User.findOne({
-        where:{
-          name: authorName,
-        }
-      });
-      const userId =  author?.getDataValue("id");
-      const categoryName =  req.body.category
-      const category= await models.Categories.findOne({
-        where:{
-          name: categoryName,
-        }
-      })
-      const categoryId =  category?.getDataValue("id")
-      const provinceName =  req.body.province
-      const province= await models.Provinces.findOne({
-        where:{
-          name: provinceName,
-        }
-      });
-      const provinceId =  province?.getDataValue("id")
+      const userId =  req.body.author
+      const categoryId =  req.body.category
+      const provinceId =  req.body.province
       const title =  req.body.title;
       const body=  req.body.body;
       const requiresSubscription=  req.body.sub;
       
-      if (!authorName) {
-        return res.status(400).json({ msg: "name field is required.", error: true });
-    }
       if (!userId) {
           return res.status(400).json({ msg: "userId field is required.", error: true });
       }
@@ -112,26 +91,12 @@ const updatePosts = async (req: any , res: any) => {
   try {
       const PostsID = req.params.id;
       const Posts = await models.Posts.findByPk(PostsID);
-      const categoryName =  req.body.category
-      const category= await models.Categories.findOne({
-        where:{
-          name: categoryName,
-        }
-      })
-      const categoryId =  category?.getDataValue("id")
-      const provinceName =  req.body.province
-      const province= await models.Provinces.findOne({
-        where:{
-          name: provinceName,
-        }
-      });
-      const provinceId =  province?.getDataValue("id")
       
       if (Posts) {
           res.status(200).json({ data: Posts,'status':200, error: false });
           Posts.set({
-            categoryId:categoryId,
-            provinceId:provinceId,
+            categoryId:req.body.category,
+            provinceId:req.body.province,
             title:req.body.title,
             body:req.body.body,
             requiresSubscription:req.body.sub
