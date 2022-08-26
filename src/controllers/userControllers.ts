@@ -27,6 +27,23 @@ const getAllUser = async (req:any, res:any) => {
       return res.status(500).json({ msg: error, error: true });
   }
 };
+const userExist = async (req:any , res:any) => {
+  try {
+    const username = req.params.username;
+    const response = await models.User.findOne({ where: {username} });
+    if (response != null) {
+      return res.status(200).json({ msg: `User exist.`, error: false, exist: true });      
+    // eslint-disable-next-line brace-style
+    }
+    // eslint-disable-next-line no-else-return
+    else {
+      return res.status(200).json({ msg: `User not found.`, error: false, exist: false });
+      }
+   }  catch (error) {
+    return res.status(500).json({ msg: error, error: true });
+  }
+
+}
 
 const addUser = async (req: any , res: any) => {
   try {
@@ -36,7 +53,7 @@ const addUser = async (req: any , res: any) => {
       const role = req.body.role;
       const phoneNumber = req.body.phoneNumber;
       const subscribedUntil=req.body.subscribedUntil;
-      
+          
       if (!name) {
         return res.status(400).json({ msg: "name field is required.", error: true });
     }
@@ -51,11 +68,16 @@ const addUser = async (req: any , res: any) => {
       }
       if (!phoneNumber) {
           return res.status(400).json({ msg: "phoneNumber field is required.", error: true });
-      }  
+      }      
+      const alreadyExistingUser = await models.User.findOne({ where: {username} });
+      if (alreadyExistingUser==null){
       const userInstance = models.User.build(req.body);
       await userInstance.save();
       res.status(200).json({ data: userInstance, error: false });
-
+      }
+      else{
+        res.status(409).json({ msg: `User already exist.`, error: true});
+      }
   } catch (error) {
       return res.status(500).json({ msg: error, error: true });
   }
@@ -120,5 +142,5 @@ const getUserByIdWithPosts = async (req: any, res: any) => {
   }
 };
 
-export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts};
+export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts,userExist};
 
