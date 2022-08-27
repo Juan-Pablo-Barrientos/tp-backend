@@ -50,27 +50,44 @@ const addUser = async (req: any , res: any) => {
       const name = req.body.name;
       const surname =req.body.surname;
       const username = req.body.username;
+      const password = req.body.password;
+      const email = req.body.email;
       const role = req.body.role;
       const phoneNumber = req.body.phoneNumber;
       const subscribedUntil=req.body.subscribedUntil;
           
       if (!name) {
         return res.status(400).json({ msg: "name field is required.", error: true });
-    }
+      }
       if (!surname) {
           return res.status(400).json({ msg: "surname field is required.", error: true });
       }
       if (!username) {
           return res.status(400).json({ msg: "username field is required.", error: true });
       }
+      if (!password) {
+          return res.status(400).json({ msg: "password field is required.", error: true });
+      }
+      if (!email) {
+        return res.status(400).json({ msg: "email field is required.", error: true });
+      }
       if (!role) {
           return res.status(400).json({ msg: "role field is required.", error: true });
       }
       if (!phoneNumber) {
           return res.status(400).json({ msg: "phoneNumber field is required.", error: true });
-      }      
+      }
+
+      if (req.body.subscribedUntil) {
+        req.body.subscribedUntil = new Date();
+        req.body.subscribedUntil.setMonth(req.body.subscribedUntil.getMonth() + 1);
+      }
+      else {
+        delete req.body['subscribedUntil'];
+      }
       const alreadyExistingUser = await models.User.findOne({ where: {username} });
-      if (alreadyExistingUser==null){
+      
+      if (alreadyExistingUser === null){
       const userInstance = models.User.build(req.body);
       await userInstance.save();
       res.status(200).json({ data: userInstance, error: false });
