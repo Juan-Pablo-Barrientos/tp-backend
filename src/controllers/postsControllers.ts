@@ -25,13 +25,18 @@ const getPostsById = async (req: any, res: any) => {
 const getAllPosts = async (req:any, res:any) => { 
   const autorId = req.query.autorId;
   const categoryId= req.query.categoryId;
+  const keyWord = req.query.title;
+  const { Op } = require("sequelize");
   let conditions  = [{}];
   if(categoryId!=null){
     conditions.push({categoryId:categoryId});
-    ;}
+    }
   if(autorId!=null){
     conditions.push({userId:autorId});
-    ;}
+    }
+  if(keyWord!=null){
+    conditions.push({title: {[Op.substring]:keyWord}})
+  }
   try {
       const response = await models.Posts.findAll({
         where:conditions
@@ -151,20 +156,5 @@ const getPostsByIdWithAuthor = async (req: any, res: any) => {
   }
 };
 
-const getPostsByTitle = async (req:any, res:any) => { 
-const keyWord= req.params.title;
-const { Op } = require("sequelize");
-  try {
-      const response = await models.Posts.findAll({
-        where: {
-          title: {[Op.substring]:keyWord} 
-        }
-      });
-      return res.status(200).json({ data: response, error: false });
-  } catch (error) {
-      return res.status(500).json({ msg: error, error: true });
-  }
-};
-
-export { getPostsById, addPosts , getAllPosts , updatePosts , deletePosts,getPostsByIdWithAuthor,getPostsByTitle};
+export { getPostsById, addPosts , getAllPosts , updatePosts , deletePosts,getPostsByIdWithAuthor};
 
