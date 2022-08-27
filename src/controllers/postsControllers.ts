@@ -34,7 +34,7 @@ const getAllPosts = async (req:any, res:any) => {
   if(autorId!=null){
     conditions.push({userId:autorId});
     }
-  if(keyWord!=null){
+  if(keyWord!=null || keyWord==""){
     conditions.push({title: {[Op.substring]:keyWord}})
   }
   try {
