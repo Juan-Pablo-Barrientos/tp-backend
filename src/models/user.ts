@@ -13,6 +13,8 @@ const User = sequelizeORM.define('users', {
     primaryKey: true,
   },
 
+  email: DataTypes.STRING(200),
+  
   name: DataTypes.STRING(200),
 
   surname: DataTypes.STRING(200),
