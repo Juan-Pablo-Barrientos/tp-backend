@@ -1,6 +1,4 @@
-import { DataTypes } from 'sequelize';
 import sequelizeORM from '../database/connection';
-
 import User from './user';
 import Polls from './polls';
 import PollValues from './poll_values';

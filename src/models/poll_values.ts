@@ -2,7 +2,6 @@ import { DataTypes } from 'sequelize';
 import sequelizeORM from '../database/connection';
 
 import Polls from "./polls";
-import UserVotes from "./user_votes";
 
 const PollValues = sequelizeORM.define('poll_values', {
   id: {

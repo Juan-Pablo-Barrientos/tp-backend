@@ -3,5 +3,5 @@ const router = express.Router();
 import * as categoriesController from "../controllers/categoriesController";
 
 router.get("/:id", categoriesController.getCategoriesById);
-router.put("/", categoriesController.addCategories);
+router.post("/", categoriesController.addCategories);
 export default router;

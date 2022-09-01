@@ -1,9 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelizeORM from '../database/connection';
 
-import Polls from "./polls";
-import Posts from "./posts";
-
 const Categories = sequelizeORM.define('categories', {
   id: {
     type: DataTypes.INTEGER,

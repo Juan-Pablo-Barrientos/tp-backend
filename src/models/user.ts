@@ -1,9 +1,5 @@
 import { DataTypes } from 'sequelize';
 import sequelizeORM from '../database/connection';
-import PollValues from './poll_values';
-
-import Posts from './posts';
-import UserVotes from './user_votes';
 
 const User = sequelizeORM.define('users', {
   id: {

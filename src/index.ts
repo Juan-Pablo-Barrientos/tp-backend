@@ -2,16 +2,14 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import routesIndex from './routes/index'
 import routesNavigation from "./routes/Navigation/Index"
-import bodyParser from 'body-parser';
 import cors from 'cors';
-import sequelizeORM from './database/connection';
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 app.use("/api/", routesIndex);
 app.use("/", routesNavigation)

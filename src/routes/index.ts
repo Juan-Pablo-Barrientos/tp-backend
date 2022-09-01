@@ -18,7 +18,7 @@ router.use("/posts", postsRouter);
 router.use("/provinces", provincesRouter);
 router.use("/subscription_prices", subscriptionPricesRouter);
 router.use("/user_votes", userVotesRouter);
-router.use("/user", userRouter);
+router.use("/users", userRouter);
 router.use("/city", cityRouter)
 
 export default router;
