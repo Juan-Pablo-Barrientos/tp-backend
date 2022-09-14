@@ -1,16 +1,14 @@
-// eslint-disable-next-line import/extensions
 import * as models from '../models/index';
+const jwt = require("jsonwebtoken");
+const AuthJWT = require('../configs/jwt')
 
-// eslint-disable-next-line consistent-return
 const getUserById = async (req: any, res: any) => {
   try {
     const userID = req.params.id;   
     const response = await models.User.findByPk(userID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `User not found.`, error: true });
     }
@@ -33,9 +31,7 @@ const userExist = async (req:any , res:any) => {
     const response = await models.User.findOne({ where: {username} });
     if (response != null) {
       return res.status(200).json({ msg: `User exist.`, error: false, exist: true });      
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(200).json({ msg: `User not found.`, error: false, exist: false });
       }
@@ -132,10 +128,8 @@ const deleteUser = async (req: any , res: any) => {
       return res.status(500).json({ msg: error, error: true });
   }
 }
-// eslint-disable-next-line import/prefer-default-export
 
 
-// eslint-disable-next-line consistent-return
 const getUserByIdWithPosts = async (req: any, res: any) => {
   try {
     const userID = req.params.id;   
@@ -148,9 +142,7 @@ const getUserByIdWithPosts = async (req: any, res: any) => {
     });
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `User not found.`, error: true });
     }
@@ -159,5 +151,58 @@ const getUserByIdWithPosts = async (req: any, res: any) => {
   }
 };
 
-export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts,userExist};
+const login= async (req:any, res:any, next:any) => {
+  const body = req.body;
+  try {
+    const user = await loginCore(body);
+    if (user) return res.status(200).send({ data: user });
+    else return res.status(404).send(`The user or password is not correct`);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+  const loginCore= async (usernPass:any) => {
+    const userLogin = await loginRepository(usernPass);
+    if (userLogin){
+      const userToJson = userLogin.toJSON();
+      if (userToJson) {
+        let PassMatch= false
+        if (usernPass.password===userToJson.password) {
+          PassMatch=true
+        }
+        if (PassMatch) {
+          userToJson.jwt = jwt.sign({ id_user: userToJson.id, userDni: userToJson.dni }, AuthJWT.secret, {
+            expiresIn: AuthJWT.expires,
+          });
+          delete userToJson.password;
+          return userToJson;
+        }
+      }
+    }
+  }
+
+  const loginRepository= async (usernPass:any) => {
+    const { username } = usernPass;
+    const getUsr = await models.User.scope("list").findOne({
+      where: {
+        username: username,
+      },
+      attributes: [
+        "id",
+        "name",
+        "surname",
+        "role",
+        "phoneNumber",
+        "subscribedUntil",
+        "Bio",
+        "password",
+        "email",
+      ],
+    });
+    return getUsr;
+  }
+
+
+export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts, userExist, login};
 

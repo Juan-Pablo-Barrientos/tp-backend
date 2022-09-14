@@ -9,4 +9,5 @@ router.get("/:id/posts",userControllers.getUserByIdWithPosts);
 router.get("/",userControllers.getAllUser);
 router.patch("/:id", userControllers.updateUser);
 router.delete("/:id", userControllers.deleteUser);
+router.post("/login", userControllers.login);
 export default router;
