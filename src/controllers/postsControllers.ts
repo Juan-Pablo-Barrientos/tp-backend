@@ -2,6 +2,7 @@
 import { request } from 'express';
 import { IntegerDataType } from 'sequelize/types';
 import * as models from '../models/index';
+var cloudinary = require('cloudinary').v2;
 
 
 // eslint-disable-next-line consistent-return
@@ -47,51 +48,38 @@ const getAllPosts = async (req:any, res:any) => {
   }
 };
 
-const addPosts = async (req: any , res: any) => {
+const addPosts= async (req:any, res:any, next:any) => {
+  let post = req.body;
+  let img = req.files['myImage'][0];
   try {
-      const userId =  req.body.author
-      const categoryId =  req.body.category
-      const provinceId =  req.body.province
-      const title =  req.body.title;
-      const body=  req.body.body;
-      const requiresSubscription=  req.body.sub;
-      
-      if (!userId) {
-          return res.status(400).json({ msg: "userId field is required.", error: true });
-      }
-      if (!categoryId) {
-          return res.status(400).json({ msg: "categoryId field is required.", error: true });
-      }
-      if (!provinceId) {
-          return res.status(400).json({ msg: "provinceId field is required.", error: true });
-      }
-      if (!title) {
-          return res.status(400).json({ msg: "title field is required.", error: true });
-      }  
-      if (!body) {
-        return res.status(400).json({ msg: "body field is required.", error: true });
-    }
-    if (!requiresSubscription) {
-        return res.status(400).json({ msg: "requiresSubscription field is required.", error: true });
-    }
-
-      const PostsInstance = models.Posts.build({
-        userId:userId,
-        categoryId:categoryId,
-        provinceId:provinceId,
-        title:title,
-        body:body,
-        requiresSubscription:requiresSubscription
-  
-      });
-      await PostsInstance.save();
-      res.status(200).json({ data: PostsInstance, 'status':200 , error: false });
-
+    let postCreated = await addPostsCore(post, img);
+    return res.status(201).send(postCreated);
   } catch (error) {
-      return res.status(500).json({ msg: error, 'status':500 , error: true });
+    return next(error);
   }
-
 }
+const addPostsCore= async (post:any, img:any,) => {
+  if(img){
+    const options = {
+      use_filename: false,
+      unique_filename: false,
+      overwrite: true,
+    };
+    try {
+      const result = await cloudinary.uploader.upload(img.path, options);
+      post.path_img = ("https://res.cloudinary.com/clawgames/image/upload/"+result.public_id)
+    } catch (error) {
+    }
+  }
+  const postCreated = await addPostsRepository(post);
+  return postCreated;
+}
+const addPostsRepository= async (post:any) => {
+    const postCreated = await models.Posts.create(post);
+    return postCreated;
+}
+
+
 const updatePosts = async (req: any , res: any) => {
   try {
       const PostsID = req.params.id;
@@ -137,7 +125,7 @@ const getPostsByIdWithAuthor = async (req: any, res: any) => {
   try {
     const PostsID = req.params.id;   
     const response = await models.Posts.findByPk(PostsID,{
-      attributes: ['title','body'],
+      attributes: ['title','body','path_img'],
       include: [{
         model:models.User,
         attributes: ['name','surname']

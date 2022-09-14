@@ -1,8 +1,12 @@
 import express from "express";
 const router = express.Router();
 import * as postsControllers from "../controllers/postsControllers";
+const multer = require('multer');
+const upload = multer({dest:'public/images',limits: { fieldSize: 50 * 1024 * 1024 }});
+const multerConfig = upload.fields([{name: 'myImage', maxCount: 1}])
 
-router.post("/", postsControllers.addPosts);
+
+router.post("/", multerConfig, postsControllers.addPosts);
 router.get("/:id",postsControllers.getPostsById);
 router.get("/",postsControllers.getAllPosts);
 router.patch("/:id", postsControllers.updatePosts);
