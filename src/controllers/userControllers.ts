@@ -171,7 +171,7 @@ const login= async (req:any, res:any, next:any) => {
           PassMatch=true
         }
         if (PassMatch) {
-          userToJson.jwt = jwt.sign({ id_user: userToJson.id, userDni: userToJson.dni }, process.env.AUTH_SECRET, {
+          userToJson.jwt = jwt.sign({ id_user: userToJson.id, role: userToJson.role }, process.env.AUTH_SECRET, {
             expiresIn: process.env.AUTH_EXPIRES,
           });
           delete userToJson.password;
