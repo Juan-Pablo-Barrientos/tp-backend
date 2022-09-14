@@ -19,6 +19,10 @@ const User = sequelizeORM.define('users', {
     type: DataTypes.STRING(45),
     allowNull: false,
   },
+  password: {
+    type: DataTypes.STRING(45),
+    allowNull: false,
+  },
 
   role: {
     type: DataTypes.STRING(45),

@@ -39,6 +39,21 @@ const userExist = async (req:any , res:any) => {
   }
 
 }
+const emailExist = async (req:any , res:any) => {
+  try {
+    const email = req.params.email;
+    const response = await models.User.findOne({ where: {email} });
+    if (response != null) {
+      return res.status(200).json({ msg: `Email exist.`, error: false, exist: true });      
+    }
+    else {
+      return res.status(200).json({ msg: `Email not found.`, error: false, exist: false });
+      }
+   }  catch (error) {
+    return res.status(500).json({ msg: error, error: true });
+  }
+
+}
 
 const addUser = async (req: any , res: any) => {
   try {
@@ -49,7 +64,6 @@ const addUser = async (req: any , res: any) => {
       const email = req.body.email;
       const role = req.body.role;
       const phoneNumber = req.body.phoneNumber;
-      const subscribedUntil=req.body.subscribedUntil;
           
       if (!name) {
         return res.status(400).json({ msg: "name field is required.", error: true });
@@ -203,5 +217,5 @@ const login= async (req:any, res:any, next:any) => {
   }
 
 
-export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts, userExist, login};
+export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts, userExist, login, emailExist};
 
