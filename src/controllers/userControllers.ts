@@ -1,6 +1,5 @@
 import * as models from '../models/index';
 const jwt = require("jsonwebtoken");
-const AuthJWT = require('../configs/jwt')
 
 const getUserById = async (req: any, res: any) => {
   try {
@@ -172,8 +171,8 @@ const login= async (req:any, res:any, next:any) => {
           PassMatch=true
         }
         if (PassMatch) {
-          userToJson.jwt = jwt.sign({ id_user: userToJson.id, userDni: userToJson.dni }, AuthJWT.secret, {
-            expiresIn: AuthJWT.expires,
+          userToJson.jwt = jwt.sign({ id_user: userToJson.id, userDni: userToJson.dni }, process.env.AUTH_SECRET, {
+            expiresIn: process.env.AUTH_EXPIRES,
           });
           delete userToJson.password;
           return userToJson;
@@ -184,7 +183,7 @@ const login= async (req:any, res:any, next:any) => {
 
   const loginRepository= async (usernPass:any) => {
     const { username } = usernPass;
-    const getUsr = await models.User.scope("list").findOne({
+    const getUsr = await models.User.findOne({
       where: {
         username: username,
       },
