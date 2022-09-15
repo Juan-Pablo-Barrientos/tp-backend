@@ -3,7 +3,10 @@ import User from './user';
 import Polls from './polls';
 import PollValues from './poll_values';
 
-const UserVotes = sequelizeORM.define('user_votes', {});
+const UserVotes = sequelizeORM.define('user_votes', {},{
+    paranoid: true,
+    deletedAt: 'destroyTime'
+    });
 UserVotes.removeAttribute('id');
 
 Polls.hasMany(UserVotes);

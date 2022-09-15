@@ -38,5 +38,10 @@ const User = sequelizeORM.define('users', {
   },
   
   bio:DataTypes.TEXT
-});
+},
+{
+  paranoid: true,
+  deletedAt: 'destroyTime'
+  }
+);
 export default User;

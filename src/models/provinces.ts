@@ -10,5 +10,10 @@ const Provinces = sequelizeORM.define('province', {
   },
 
   name: DataTypes.STRING(200),
-});
+},
+{
+  paranoid: true,
+  deletedAt: 'destroyTime'
+  }
+);
 export default Provinces;

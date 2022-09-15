@@ -21,7 +21,12 @@ const Posts = sequelizeORM.define('Posts', {
   path_img: DataTypes.BOOLEAN,
   clicks: DataTypes.NUMBER,
   postDate: DataTypes.DATE
-});
+},
+{
+  paranoid: true,
+  deletedAt: 'destroyTime'
+  }
+);
 Categories.hasMany(Posts);
 Provinces.hasMany(Posts);
 User.hasMany(Posts);

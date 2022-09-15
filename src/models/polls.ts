@@ -11,7 +11,12 @@ const Polls = sequelizeORM.define('Polls', {
     primaryKey: true,
   },
   description: DataTypes.STRING(200),
-});
+},
+{
+  paranoid: true,
+  deletedAt: 'destroyTime'
+  }
+);
 
 Categories.hasMany(Polls);
 Polls.belongsTo(Categories);

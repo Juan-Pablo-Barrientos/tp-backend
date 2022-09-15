@@ -12,7 +12,12 @@ const PollValues = sequelizeORM.define('poll_values', {
   },
 
   description: DataTypes.STRING(200),
-});
+},
+{
+  paranoid: true,
+  deletedAt: 'destroyTime'
+  }
+);
 
 Polls.hasMany(PollValues);
 PollValues.belongsTo(Polls);
