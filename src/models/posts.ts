@@ -19,6 +19,8 @@ const Posts = sequelizeORM.define('Posts', {
 
   requiresSubscription: DataTypes.BOOLEAN,
   path_img: DataTypes.BOOLEAN,
+  clicks: DataTypes.NUMBER,
+  postDate: DataTypes.DATE
 });
 Categories.hasMany(Posts);
 Provinces.hasMany(Posts);

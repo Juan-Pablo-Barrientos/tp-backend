@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/extensions
 import { request } from 'express';
 import { IntegerDataType } from 'sequelize/types';
+import { Op } from 'sequelize'
+const Sequelize = require('sequelize')
 import * as models from '../models/index';
 var cloudinary = require('cloudinary').v2;
 
@@ -47,7 +49,7 @@ const getAllPosts = async (req:any, res:any) => {
       return res.status(500).json({ msg: error, error: true });
   }
 };
-
+//TODO JOIN addPosts, addPostsCore y addPostsRepository
 const addPosts= async (req:any, res:any, next:any) => {
   let post = req.body;
   let img = req.files['myImage'][0];
@@ -75,10 +77,12 @@ const addPostsCore= async (post:any, img:any,) => {
   return postCreated;
 }
 const addPostsRepository= async (post:any) => {
+    post.clicks=0
+    post.postDate=Sequelize.cast(new Date(), "datetime")
     const postCreated = await models.Posts.create(post);
     return postCreated;
 }
-
+//
 
 const updatePosts = async (req: any , res: any) => {
   try {
@@ -124,13 +128,16 @@ const deletePosts = async (req: any , res: any) => {
 const getPostsByIdWithAuthor = async (req: any, res: any) => {
   try {
     const PostsID = req.params.id;   
-    const response = await models.Posts.findByPk(PostsID,{
-      attributes: ['title','body','path_img'],
+    let response:any = await models.Posts.findByPk(PostsID,{
       include: [{
         model:models.User,
         attributes: ['name','surname']
       }],
     });
+    if(response){
+      response.clicks+=1
+      response.save()
+    }
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     // eslint-disable-next-line brace-style
@@ -144,5 +151,26 @@ const getPostsByIdWithAuthor = async (req: any, res: any) => {
   }
 };
 
-export { getPostsById, addPosts , getAllPosts , updatePosts , deletePosts,getPostsByIdWithAuthor};
+
+const getMostClickedPosts = async (req:any, res:any) => { 
+  try {
+    const numWeeks = 1;
+    const now = new Date();
+    const minusWeek= new Date( Date.now() - (6.048e+8 * numWeeks) );
+    
+      const response = await models.Posts.findAll({
+        where: {[Op.and] :{
+          postDate: {
+            [Op.gt]: Sequelize.cast(minusWeek, "datetime"),
+            [Op.lt]: Sequelize.cast(now, "datetime")
+          }
+        }}
+      })
+      return res.status(200).json({ data: response, error: false });
+  } catch (error) {
+      return res.status(500).json({ msg: error, error: true });
+  }
+};
+
+export { getPostsById, addPosts , getAllPosts , updatePosts , deletePosts,getPostsByIdWithAuthor, getMostClickedPosts};
 

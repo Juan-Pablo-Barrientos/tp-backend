@@ -7,6 +7,7 @@ const multerConfig = upload.fields([{name: 'myImage', maxCount: 1}])
 
 
 router.post("/", multerConfig, postsControllers.addPosts);
+router.get("/mostClicked",postsControllers.getMostClickedPosts)
 router.get("/:id",postsControllers.getPostsById);
 router.get("/",postsControllers.getAllPosts);
 router.patch("/:id", postsControllers.updatePosts);

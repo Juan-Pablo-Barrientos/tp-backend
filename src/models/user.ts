@@ -14,6 +14,7 @@ const User = sequelizeORM.define('users', {
   name: DataTypes.STRING(200),
 
   surname: DataTypes.STRING(200),
+  postPermission: DataTypes.BOOLEAN,
 
   username: {
     type: DataTypes.STRING(45),
