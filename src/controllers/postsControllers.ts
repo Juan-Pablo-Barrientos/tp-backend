@@ -145,8 +145,8 @@ const getMostClickedPosts = async (req:any, res:any) => {
     const now = new Date();
     const minusWeek= new Date( Date.now() - (6.048e+8 * numWeeks) );
     
-      const response = await models.Posts.findAll({
-        where: {[Op.and] :{
+      const response = await models.Posts.findAll({ order: [["clicks", "DESC"]],
+        where: {  [Op.and] :{
           postDate: {
             [Op.gt]: Sequelize.cast(minusWeek, "datetime"),
             [Op.lt]: Sequelize.cast(now, "datetime")
