@@ -52,37 +52,24 @@ const getAllPosts = async (req:any, res:any) => {
 //TODO JOIN addPosts, addPostsCore y addPostsRepository
 const addPosts= async (req:any, res:any, next:any) => {
   let post = req.body;
+  post.clicks=0;
+  post.postDate=Sequelize.cast(new Date(), "datetime");
   let img = req.files['myImage'][0];
   try {
-    let postCreated = await addPostsCore(post, img);
+    if(img){
+      const options = {use_filename: false, unique_filename: false,overwrite: true,};
+      try {
+        const result = await cloudinary.uploader.upload(img.path, options);
+        post.path_img = ("https://res.cloudinary.com/clawgames/image/upload/"+result.public_id)
+      } catch (error) {
+      }
+    }   
+    const postCreated = await models.Posts.create(post);
     return res.status(201).send(postCreated);
   } catch (error) {
     return next(error);
   }
 }
-const addPostsCore= async (post:any, img:any,) => {
-  if(img){
-    const options = {
-      use_filename: false,
-      unique_filename: false,
-      overwrite: true,
-    };
-    try {
-      const result = await cloudinary.uploader.upload(img.path, options);
-      post.path_img = ("https://res.cloudinary.com/clawgames/image/upload/"+result.public_id)
-    } catch (error) {
-    }
-  }
-  const postCreated = await addPostsRepository(post);
-  return postCreated;
-}
-const addPostsRepository= async (post:any) => {
-    post.clicks=0
-    post.postDate=Sequelize.cast(new Date(), "datetime")
-    const postCreated = await models.Posts.create(post);
-    return postCreated;
-}
-//
 
 const updatePosts = async (req: any , res: any) => {
   try {
