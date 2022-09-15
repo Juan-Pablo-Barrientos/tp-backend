@@ -19,7 +19,12 @@ const Posts = sequelizeORM.define('Posts', {
 
   requiresSubscription: DataTypes.BOOLEAN,
   path_img: DataTypes.BOOLEAN,
-});
+},
+{
+  paranoid: true,
+  deletedAt: 'destroyTime'
+  }
+);
 Categories.hasMany(Posts);
 Provinces.hasMany(Posts);
 User.hasMany(Posts);

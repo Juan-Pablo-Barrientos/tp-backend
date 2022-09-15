@@ -8,7 +8,13 @@ const Categories = sequelizeORM.define('categories', {
     autoIncrement: true,
     primaryKey: true,
   },
-
+  
   name: DataTypes.STRING(200),
-});
+  
+},
+ {
+  paranoid: true,
+  deletedAt: 'destroyTime'
+  }
+);
 export default Categories;

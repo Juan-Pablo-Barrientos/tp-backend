@@ -10,5 +10,10 @@ const SubscriptionPrices = sequelizeORM.define('subscriptions_prices', {
   },
 
   price: DataTypes.DECIMAL(10, 2),
-});
+},
+{
+  paranoid: true,
+  deletedAt: 'destroyTime'
+  }
+);
 export default SubscriptionPrices;
