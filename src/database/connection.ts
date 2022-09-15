@@ -5,7 +5,7 @@ import dotenv from "dotenv"
 dotenv.config();
 
 // eslint-disable-next-line import/prefer-default-export
-const sequelizeORM = new Sequelize(process.env.DATABASENAME!, process.env.DATABASEUSERNAME!, process.env.DATABASEPASSWORD!, { host: 'localhost', dialect: 'mysql', define: {
+const sequelizeORM = new Sequelize(process.env.DB_NAME!, process.env.DB_USER!, process.env.DB_PASS!, { host: process.env.DB_HOST, dialect: 'mysql', define: {
     timestamps: false
 }});
 export default sequelizeORM;
