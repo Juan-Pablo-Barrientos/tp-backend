@@ -8,7 +8,7 @@ router.get("/:username/exists",userControllers.userExist)
 router.get("/:email/existemail",userControllers.emailExist)
 router.get("/:id/posts",userControllers.getUserByIdWithPosts);
 router.get("/",userControllers.getAllUser);
-router.patch("/:id", userControllers.updateUser);
+router.put("/:id", userControllers.updateUser);
 router.delete("/:id", userControllers.deleteUser);
 router.post("/login", userControllers.login);
 export default router;
