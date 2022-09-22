@@ -50,7 +50,7 @@ const getAllPosts = async (req:any, res:any) => {
       return res.status(500).json({ msg: error, error: true });
   }
 };
-//TODO JOIN addPosts, addPostsCore y addPostsRepository
+
 const addPosts= async (req:any, res:any, next:any) => {
   let post = req.body;
   post.clicks=0;
@@ -141,7 +141,7 @@ const getMostClickedPosts = async (req:any, res:any) => {
   try {
     const numWeeks = 1;
     const now = new Date();
-    const minusWeek= new Date( Date.now() - (6.048e+8 * numWeeks) );
+    const minusWeek = new Date(new Date().setDate(new Date().getDate() - 7 * numWeeks));
     
       const response = await models.Posts.findAll({ order: [["clicks", "DESC"]],
         where: {  [Op.and] :{
