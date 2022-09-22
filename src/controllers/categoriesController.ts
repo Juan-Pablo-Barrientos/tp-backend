@@ -1,16 +1,12 @@
-// eslint-disable-next-line import/extensions
 import * as models from '../models/index';
 
-// eslint-disable-next-line consistent-return
 const getCategoriesById = async (req: any, res: any) => {
   try {
     const categoriesID = req.params.id;   
     const response = await models.Categories.findByPk(categoriesID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `Category not found.`, error: true });
     }

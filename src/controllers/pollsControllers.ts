@@ -1,17 +1,13 @@
-// eslint-disable-next-line import/extensions
 import { Model } from 'sequelize/types';
 import * as models from '../models/index';
 
-// eslint-disable-next-line consistent-return
 const getPollsById = async (req: any, res: any) => {
   try {
     const PollsID = req.params.id;   
     const response = await models.Polls.findByPk(PollsID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `Polls not found.`, error: true });
     }
@@ -87,7 +83,6 @@ const deletePolls = async (req: any , res: any) => {
       return res.status(500).json({ msg: error, error: true });
   }
 }
-// eslint-disable-next-line import/prefer-default-export
 
 export { getPollsById, addPolls , getAllPolls , updatePolls , deletePolls};
 

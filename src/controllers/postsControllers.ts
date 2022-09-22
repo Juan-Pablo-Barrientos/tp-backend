@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import { request } from 'express';
 import { IntegerDataType } from 'sequelize/types';
 import { Op } from 'sequelize'
@@ -7,16 +6,13 @@ import * as models from '../models/index';
 var cloudinary = require('cloudinary').v2;
 
 
-// eslint-disable-next-line consistent-return
 const getPostsById = async (req: any, res: any) => {
   try {
     const PostsID = req.params.id;   
     const response = await models.Posts.findByPk(PostsID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `Posts not found.`, error: true });
     }
@@ -110,7 +106,6 @@ const deletePosts = async (req: any , res: any) => {
       return res.status(500).json({ msg: error,'status':500, error: true });
   }
 }
-// eslint-disable-next-line import/prefer-default-export
 
 
 const getPostsByIdWithAuthor = async (req: any, res: any) => {
@@ -125,9 +120,7 @@ const getPostsByIdWithAuthor = async (req: any, res: any) => {
     }
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `Posts not found.`, error: true });
     }

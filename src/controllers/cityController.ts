@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import sequelizeORM from "../database/connection";
 import * as models from "../models/index";
 
@@ -8,9 +7,7 @@ const getCitiesById = async (req: any, res: any) => {
     const response = await models.Cities.findByPk(citiesID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-      // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `City not found.`, error: true });
     }

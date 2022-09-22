@@ -1,15 +1,11 @@
-// eslint-disable-next-line import/extensions
 import * as models from '../models/index';
 
-// eslint-disable-next-line consistent-return
 const getPriceByDate = async (req: any, res: any) => {
   try {  
     const response = await models.SubscriptionPrices.findOne({ where: { effectiveDate: req.params} });
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `Price not found.`, error: true });
     }

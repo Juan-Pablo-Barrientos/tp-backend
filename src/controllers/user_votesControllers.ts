@@ -1,16 +1,12 @@
-// eslint-disable-next-line import/extensions
 import * as models from '../models/index';
 
-// eslint-disable-next-line consistent-return
 const getUserVotesById = async (req: any, res: any) => {
   try {
     const userVotesID = req.params.id;   
     const response = await models.UserVotes.findByPk(userVotesID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    // eslint-disable-next-line brace-style
     }
-    // eslint-disable-next-line no-else-return
     else {
       return res.status(404).json({ msg: `UserVote not found.`, error: true });
     }
@@ -85,7 +81,6 @@ const deleteUserVotes = async (req: any , res: any) => {
       return res.status(500).json({ msg: error, error: true });
   }
 }
-// eslint-disable-next-line import/prefer-default-export
 
 export { getUserVotesById, addUserVotes , getAllUserVotes , updateUserVotes , deleteUserVotes};
 
