@@ -50,9 +50,9 @@ const updateCategories = async (req: any , res: any) => {
       const category = await models.Categories.findByPk(categoriesID);
       
       if (category) {
-          res.status(200).json({ data: category, error: false });
-          category.set(req.body);
-          await category.save();
+        category.set(req.body);
+        await category.save();
+        res.status(200).json({ data: category, error: false });
       }
       else {
           res.status(404).json({ msg: 'Category not found', error: true });

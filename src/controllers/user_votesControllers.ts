@@ -59,9 +59,9 @@ const updateUserVotes = async (req: any , res: any) => {
       const userVotes = await models.UserVotes.findByPk(userVotesID);
       
       if (userVotes) {
-          res.status(200).json({ data: userVotes, error: false });
-          userVotes.set(req.body);
-          await userVotes.save();
+        userVotes.set(req.body);
+        await userVotes.save();
+        res.status(200).json({ data: userVotes, error: false });
       }
       else {
           res.status(404).json({ msg: 'User not found', error: true });

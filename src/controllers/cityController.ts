@@ -52,9 +52,9 @@ const updateCities = async (req: any, res: any) => {
     const cityInstance = await models.Cities.findByPk(citiesID);
 
     if (cityInstance) {
-      res.status(200).json({ data: cityInstance, error: false });
       cityInstance.set(req.body);
       await cityInstance.save();
+      res.status(200).json({ data: cityInstance, error: false });
     } else {
       res.status(404).json({ msg: "City not found", error: true });
     }

@@ -29,7 +29,7 @@ const getAllPosts = async (req:any, res:any) => {
   const autorId = req.query.autorId;
   const categoryId= req.query.categoryId;
   const keyWord = req.query.title;
-  const { Op } = require("sequelize");
+
   let conditions  = [{}];
   if(categoryId!=null){
     conditions.push({categoryId:categoryId});
@@ -78,15 +78,15 @@ const updatePosts = async (req: any , res: any) => {
       const Posts = await models.Posts.findByPk(PostsID);
       
       if (Posts) {
-          res.status(200).json({ data: Posts,'status':200, error: false });
-          Posts.set({
-            categoryId:req.body.category,
-            provinceId:req.body.province,
-            title:req.body.title,
-            body:req.body.body,
-            requiresSubscription:req.body.sub
-          });
-          await Posts.save();
+        Posts.set({
+          categoryId:req.body.category,
+          provinceId:req.body.province,
+          title:req.body.title,
+          body:req.body.body,
+          requiresSubscription:req.body.sub
+        });
+        await Posts.save();
+        res.status(200).json({ data: Posts,'status':200, error: false });
       }
       else {
           res.status(404).json({ msg: 'Posts not found','status':404, error: true });

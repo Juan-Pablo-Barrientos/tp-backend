@@ -116,9 +116,9 @@ const updateUser = async (req: any , res: any) => {
       const user = await models.User.findByPk(userID);
       
       if (user) {
-          res.status(200).json({ data: user, error: false });
-          user.set(req.body);
-          await user.save();
+        user.set(req.body);
+        await user.save();
+        res.status(200).json({ data: user, error: false });
       }
       else {
           res.status(404).json({ msg: 'User not found', error: true });

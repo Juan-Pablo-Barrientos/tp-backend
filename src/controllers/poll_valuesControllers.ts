@@ -55,9 +55,9 @@ const updatePollValues = async (req: any , res: any) => {
       const pollValue = await models.PollValues.findByPk(pollValuesID);
       
       if (pollValue) {
-          res.status(200).json({ data: pollValue, error: false });
-          pollValue.set(req.body);
-          await pollValue.save();
+        pollValue.set(req.body);
+        await pollValue.save();
+        res.status(200).json({ data: pollValue, error: false });
       }
       else {
           res.status(404).json({ msg: 'PollValue not found', error: true });

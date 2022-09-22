@@ -51,9 +51,9 @@ const updateProvinces = async (req: any , res: any) => {
       const province = await models.Provinces.findByPk(provincesID);
       
       if (province) {
-          res.status(200).json({ data: province, error: false });
-          province.set(req.body);
-          await province.save();
+        province.set(req.body);
+        await province.save();
+        res.status(200).json({ data: province, error: false });
       }
       else {
           res.status(404).json({ msg: 'Province not found', error: true });
