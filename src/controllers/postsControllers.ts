@@ -144,12 +144,12 @@ const getMostClickedPosts = async (req:any, res:any) => {
     const minusWeek = new Date(new Date().setDate(new Date().getDate() - 7 * numWeeks));
     
       const response = await models.Posts.findAll({ order: [["clicks", "DESC"]],
-        where: {  [Op.and] :{
+        where: {
           postDate: {
             [Op.gt]: Sequelize.cast(minusWeek, "datetime"),
             [Op.lt]: Sequelize.cast(now, "datetime")
           }
-        }}
+        }
       })
       return res.status(200).json({ data: response, error: false });
   } catch (error) {
