@@ -57,13 +57,7 @@ const emailExist = async (req:any , res:any) => {
 
 const addUser = async (req: any , res: any) => {
   try {
-      const name = req.body.name;
-      const surname =req.body.surname;
-      const username = req.body.username;
-      const password = req.body.password;
-      const email = req.body.email;
-      const role = req.body.role;
-      const phoneNumber = req.body.phoneNumber;
+    const{name,surname,username,password,role,email,phoneNumber} = req.body;
           
       if (!name) {
         return res.status(400).json({ msg: "name field is required.", error: true });

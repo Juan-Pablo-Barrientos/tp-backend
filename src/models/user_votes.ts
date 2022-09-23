@@ -9,7 +9,9 @@ const UserVotes = sequelizeORM.define('user_votes', {},{
     });
 UserVotes.removeAttribute('id');
 
-Polls.hasMany(UserVotes);
+Polls.hasMany(UserVotes,{
+    foreignKey: 'pollId'
+  });
 PollValues.hasMany(UserVotes);
 User.hasMany(UserVotes);
 UserVotes.belongsTo(User);
