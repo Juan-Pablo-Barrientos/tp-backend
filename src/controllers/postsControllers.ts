@@ -39,7 +39,7 @@ const getAllPosts = async (req:any, res:any) => {
   try {
       const response = await models.Posts.findAll({
         where:conditions,
-        include: { all: true, nested: true },
+        include: { all: true, nested: true, paranoid: false },
       });
       return res.status(200).json({ data: response, error: false });
   } catch (error) {
