@@ -142,11 +142,7 @@ const getUserByIdWithPosts = async (req: any, res: any) => {
   try {
     const userID = req.params.id;   
     const response = await models.User.findByPk(userID,{
-      attributes:['name','surname','bio'],
-      include:[{
-        model:models.Posts,
-        attributes:['title','body','requiresSubscription']
-    }]
+      include: { all: true, nested: true },
     });
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
