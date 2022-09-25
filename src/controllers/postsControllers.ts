@@ -112,7 +112,7 @@ const getPostsByIdWithAuthor = async (req: any, res: any) => {
   try {
     const PostsID = req.params.id;   
     let response:any = await models.Posts.findByPk(PostsID,{
-      include: { all: true, nested: true },
+      include: { all: true, nested: true ,paranoid: false },
     });
     if(response){
       response.clicks+=1
