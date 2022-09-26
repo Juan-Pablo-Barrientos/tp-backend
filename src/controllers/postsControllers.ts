@@ -132,7 +132,7 @@ const getPostsByIdWithAuthor = async (req: any, res: any) => {
 
 const getMostClickedPosts = async (req:any, res:any) => { 
   try {
-    const numWeeks = 1;
+    const numWeeks = 4;
     const now = new Date();
     const minusWeek = new Date(new Date().setDate(new Date().getDate() - 7 * numWeeks));
     
