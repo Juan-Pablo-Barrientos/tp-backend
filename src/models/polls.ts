@@ -11,10 +11,11 @@ const Polls = sequelizeORM.define('Polls', {
     primaryKey: true,
   },
   description: DataTypes.STRING(200),
+  pollDate: DataTypes.DATEONLY
 },
 {
   paranoid: true,
-  deletedAt: 'destroyTime'
+  deletedAt: 'destroyTime',
   }
 );
 
