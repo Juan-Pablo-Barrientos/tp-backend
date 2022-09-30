@@ -23,9 +23,14 @@ const getTodaysPoll = async (req: any, res: any) => {
   try {
     const TODAY = new Date();
     const response = await models.Polls.findOne({ 
+      include: [
+        {
+          model: models.PollValues  , attributes: ['id','description']  
+        }],
       where: {   
       pollDate: TODAY  
-    } });
+    } }
+    );
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     }
@@ -45,8 +50,13 @@ const getAllPolls = async (req:any, res:any) => {
  }
   try {
       const response = await models.Polls.findAll({
+        include: [
+          {
+            model: models.PollValues  , attributes: ['id','description']  
+          }],
         where: conditions
-      });
+      },
+      );
       return res.status(200).json({ data: response, error: false });
   } catch (error) {
       return res.status(500).json({ msg: error, error: true });
@@ -69,7 +79,10 @@ const addPolls = async (req: any , res: any) => {
       if (!description) {
           return res.status(400).json({ msg: "description field is required.", error: true });
       }      
-      const PollsInstance = models.Polls.create({
+      if (!pollDate) {
+        return res.status(400).json({ msg: "pollDate field is required.", error: true });
+    }
+      const PollsInstance = await models.Polls.create({
         categoryId: categoryId,
         description: description,
         pollDate: pollDate,
@@ -78,9 +91,8 @@ const addPolls = async (req: any , res: any) => {
         include: [ models.PollValues ]
       });
       res.status(200).json({ data: PollsInstance, error: false });
-
   } catch (error) {
-      return res.status(500).json({ msg: error, error: true });
+      return res.status(500).json({ msg: "Poll date already taken", error: true });
   }
 
 }
