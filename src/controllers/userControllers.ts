@@ -16,6 +16,37 @@ const getUserById = async (req: any, res: any) => {
   }
 };
 
+const changePassword = async (req: any, res: any) => {
+  try {
+    const {userId,newPassword,oldPassword} = req.body;   
+  if (!newPassword) {
+      return res.status(400).json({ msg: "new password field is required.", error: true });
+  }
+  if (!oldPassword) {
+    return res.status(400).json({ msg: "old password field is required.", error: true });
+}
+  if (!userId) {
+  return res.status(400).json({ msg: "userId field is required.", error: true });
+}
+    const response:any = await models.User.findByPk(userId);
+    if (response != null) {
+      if(response.password==oldPassword){
+        response.update({ password: newPassword });
+        return res.status(200).json({ data: response, error: false });
+      }
+      else{
+        return res.status(404).json({ msg: `Wrong password.`, error: true });
+      }
+    }
+    else {
+      return res.status(404).json({ msg: `User not found.`, error: true });
+    }
+
+  } catch (error) {
+    return res.status(500).json({ msg: error, error: true });
+  }
+};
+
 const getAllUser = async (req:any, res:any) => {
   try {
       const response = await models.User.findAll();
@@ -208,5 +239,5 @@ const login= async (req:any, res:any, next:any) => {
   }
 
 
-export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts, userExist, login, emailExist};
+export { getUserById, addUser , getAllUser , updateUser , deleteUser, getUserByIdWithPosts, userExist, login, emailExist,changePassword};
 
