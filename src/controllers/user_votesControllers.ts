@@ -1,9 +1,16 @@
 import * as models from '../models/index';
+const { Op } = require("sequelize");
 
 const getUserVotesById = async (req: any, res: any) => {
   try {
-    const userVotesID = req.params.id;   
-    const response = await models.UserVotes.findByPk(userVotesID);
+    const{userId,pollId} = req.body;       
+    const response = await models.UserVotes.findOne({
+       where:{
+       [Op.and]: [
+        { userId: userId }, 
+        { pollId: pollId } 
+       ]}
+      });
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     }
@@ -42,7 +49,7 @@ const addUserVotes = async (req: any , res: any) => {
       res.status(200).json({ data: userVoteInstance, error: false });
 
     }catch (error) {
-      return res.status(500).json({ msg: error, error: true });
+      return res.status(500).json({ msg: "EL usuario ya votó en esta encuesta", error: true });
   }
 
 }

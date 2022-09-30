@@ -17,4 +17,5 @@ User.hasMany(UserVotes);
 UserVotes.belongsTo(User);
 UserVotes.belongsTo(Polls);
 UserVotes.belongsTo(PollValues);
+UserVotes.removeAttribute('PollId');
 export default UserVotes;
