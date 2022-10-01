@@ -52,7 +52,10 @@ const getAllPolls = async (req:any, res:any) => {
       const response = await models.Polls.findAll({
         include: [
           {
-            model: models.PollValues  , attributes: ['id','description']  
+            model: models.PollValues, attributes: ['id','description'],
+          },
+          {
+            model: models.Categories
           }],
         where: conditions
       },
