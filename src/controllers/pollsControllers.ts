@@ -73,14 +73,7 @@ const getAllPolls = async (req:any, res:any) => {
 
 const addPolls = async (req: any , res: any) => {
   try {
-      const{categoryId,description,pollDate,pollValueArray} = req.body;      
-      let pollValuesInstances  = [{}];
-      delete pollValuesInstances[0];
-      if(pollValueArray!=null || pollValueArray==""){
-        pollValueArray.forEach((element: any) => {
-          pollValuesInstances.push({description:element})
-        });    
-      } 
+      const{categoryId,description,pollDate,pollValueArray} = req.body;  
       if (!categoryId) {
         return res.status(400).json({ msg: "categoryId field is required.", error: true });
     }
@@ -90,6 +83,17 @@ const addPolls = async (req: any , res: any) => {
       if (!pollDate) {
         return res.status(400).json({ msg: "pollDate field is required.", error: true });
     }
+      const sameDatePoll = await models.Polls.findOne({where:{pollDate}});     
+      if(sameDatePoll) {
+      res.status(409).json({ msg: "Poll date already taken", error: true })}; 
+      if(!sameDatePoll){
+      let pollValuesInstances = [{}];
+      delete pollValuesInstances[0];
+      if(pollValueArray!=null || pollValueArray==""){
+        pollValueArray.forEach((element: any) => {
+          pollValuesInstances.push({description:element})
+        });    
+      } 
       const PollsInstance = await models.Polls.create({
         categoryId: categoryId,
         description: description,
@@ -98,12 +102,9 @@ const addPolls = async (req: any , res: any) => {
       }, {
         include: [ models.PollValues ]
       });
-      res.status(200).json({ data: PollsInstance, error: false });
-  } catch (error:any) {
-    if(error.name=="SequelizeUniqueConstraintError"){
-      res.status(409).json({ msg: "Poll date already taken", error: true });
-    }
-      return res.status(500).json({ msg: error, error: true });
+      res.status(200).json({ data: PollsInstance, error: false });} 
+  } catch (error) {
+     return res.status(500).json({ msg: error, error: true });
   }
 
 }
