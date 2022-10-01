@@ -25,12 +25,20 @@ const getTodaysPoll = async (req: any, res: any) => {
     const response = await models.Polls.findOne({ 
       include: [
         {
-          model: models.PollValues  , attributes: ['id','description']  
-        }],
+          model: models.PollValues, 
+          attributes:{ 
+            include: [[
+              Sequelize.literal(`
+            (SELECT COUNT(*) FROM user_votes WHERE user_votes.pollValueId = poll_values.id group by user_votes.pollValueId) 
+            `), "votesByUsers"
+          ]] 
+        }          
+        }   
+      ],     
       where: {   
       pollDate: TODAY  
-    } }
-    );
+    }, 
+    });
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
     }
@@ -91,8 +99,11 @@ const addPolls = async (req: any , res: any) => {
         include: [ models.PollValues ]
       });
       res.status(200).json({ data: PollsInstance, error: false });
-  } catch (error) {
-      return res.status(500).json({ msg: "Poll date already taken", error: true });
+  } catch (error:any) {
+    if(error.name=="SequelizeUniqueConstraintError"){
+      res.status(409).json({ msg: "Poll date already taken", error: true });
+    }
+      return res.status(500).json({ msg: error, error: true });
   }
 
 }
