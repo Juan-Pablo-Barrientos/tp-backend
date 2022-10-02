@@ -55,11 +55,8 @@ const addPosts= async (req:any, res:any, next:any) => {
   try {
     if(img){
       const options = {use_filename: false, unique_filename: false,overwrite: true,};
-      try {
         const result = await cloudinary.uploader.upload(img.path, options);
         post.path_img = ("https://res.cloudinary.com/clawgames/image/upload/"+result.public_id)
-      } catch (error) {
-      }
     }   
     const postCreated = await models.Posts.create(post);
     return res.status(201).send(postCreated);
@@ -72,14 +69,25 @@ const updatePosts = async (req: any , res: any) => {
   try {
       const PostsID = req.params.id;
       const Posts = await models.Posts.findByPk(PostsID);
-      
+      let img;
+      if(req.files['myImage']!==undefined){
+      img = req.files['myImage'][0];
+      }
       if (Posts) {
+      
+        if(img){
+        const options = {use_filename: false, unique_filename: false,overwrite: true,};
+          const result = await cloudinary.uploader.upload(img.path, options);
+          let cdnImgPath = ("https://res.cloudinary.com/clawgames/image/upload/"+result.public_id)
+          Posts.set({
+            path_img:cdnImgPath
+          });
+        }
         Posts.set({
-          categoryId:req.body.category,
-          provinceId:req.body.province,
+          categoryId:req.body.categoryId,
+          provinceId:req.body.provinceId,
           title:req.body.title,
-          body:req.body.body,
-          requiresSubscription:req.body.sub
+          body:req.body.body
         });
         await Posts.save();
         res.status(200).json({ data: Posts,'status':200, error: false });

@@ -6,6 +6,6 @@ router.post("/", pollsControllers.addPolls);
 router.get("/:id",pollsControllers.getPollsById);
 router.get("/today/poll",pollsControllers.getTodaysPoll);
 router.get("/",pollsControllers.getAllPolls);
-router.patch("/:id", pollsControllers.updatePolls);
+router.put("/:id", pollsControllers.updatePolls);
 router.delete("/:id", pollsControllers.deletePolls);
 export default router;

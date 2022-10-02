@@ -10,7 +10,7 @@ router.post("/", multerConfig, postsControllers.addPosts);
 router.get("/mostClicked",postsControllers.getMostClickedPosts)
 router.get("/:id",postsControllers.getPostsById);
 router.get("/",postsControllers.getAllPosts);
-router.patch("/:id", postsControllers.updatePosts);
+router.put("/:id",multerConfig, postsControllers.updatePosts);
 router.delete("/:id", postsControllers.deletePosts);
 router.get("/:id/autor",postsControllers.getPostsByIdWithAuthor);
 export default router;
