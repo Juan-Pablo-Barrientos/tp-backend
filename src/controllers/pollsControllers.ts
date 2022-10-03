@@ -26,8 +26,8 @@ const getTodaysPoll = async (req: any, res: any) => {
       attributes:{ 
          include: [[
         Sequelize.literal(`
-      (SELECT COUNT(*) FROM poll_values join user_votes on poll_values.id = user_votes.pollValueId where poll_values.pollId= 86 ) 
-      `), "totalVotesTest"
+      (SELECT COUNT(*) FROM poll_values join user_votes on poll_values.id = user_votes.pollValueId where poll_values.pollId= polls.id  ) 
+      `), "totalVotes"
     ]]
   },     
       include: [ 
