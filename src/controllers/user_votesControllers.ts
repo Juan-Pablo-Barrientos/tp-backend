@@ -42,16 +42,19 @@ const addUserVotes = async (req: any , res: any) => {
     }
       if (!pollValueId) {
           return res.status(400).json({ msg: "pollValueId field is required.", error: true });
-      }   
+      }
+      const response = await models.UserVotes.findOne({ where: {pollId,userId} });
+      if(!response){
       const userVoteInstance = models.UserVotes.build(req.body);
       await userVoteInstance.save();
       res.status(200).json({ data: userVoteInstance, error: false });
-
-    }catch (error:any) {
-      if(error.name=="SequelizeUniqueConstraintError"){
-        res.status(409).json({ msg: "User already voted", error: true });
-      }  
-     else return res.status(500).json({ msg: error, error: true });
+      }
+      else{
+        await response.update({ pollValueId: pollValueId });
+        res.status(200).json({ data: response, error: false });
+      }
+    }catch (error) { 
+      return res.status(500).json({ msg: error, error: true });
   }
 
 }
