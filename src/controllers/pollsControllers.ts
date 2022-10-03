@@ -22,8 +22,16 @@ const getPollsById = async (req: any, res: any) => {
 const getTodaysPoll = async (req: any, res: any) => {
   try {
     const TODAY = new Date();
-    const response = await models.Polls.findOne({ 
-      include: [
+    const response = await models.Polls.findOne({
+      attributes:{ 
+         include: [[
+        Sequelize.literal(`
+      (SELECT COUNT(*) FROM poll_values join user_votes on poll_values.id = user_votes.pollValueId where poll_values.pollId= 86 ) 
+      `), "totalVotesTest"
+    ]]
+  },     
+      include: [ 
+        {model:models.Categories},
         {
           model: models.PollValues, 
           attributes:{ 
@@ -31,9 +39,9 @@ const getTodaysPoll = async (req: any, res: any) => {
               Sequelize.literal(`
             (SELECT COUNT(*) FROM user_votes WHERE user_votes.pollValueId = poll_values.id group by user_votes.pollValueId) 
             `), "votesByUsers"
-          ]] 
+          ],] 
         }          
-        }   
+        }      
       ],     
       where: {   
       pollDate: TODAY  
