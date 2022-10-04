@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-import { Op } from 'sequelize';
+import { Op, where } from 'sequelize';
 import * as models from '../models/index';
 
 const getPollsById = async (req: any, res: any) => {
@@ -84,7 +84,7 @@ const getAllPolls = async (req:any, res:any) => {
 
 const addPolls = async (req: any , res: any) => {
   try {
-      const{categoryId,description,pollDate,pollValueArray} = req.body;  
+      const{categoryId,description,pollDate} = req.body;  
       if (!categoryId) {
         return res.status(400).json({ msg: "categoryId field is required.", error: true });
     }
@@ -98,22 +98,10 @@ const addPolls = async (req: any , res: any) => {
       if(sameDatePoll) {
       res.status(409).json({ msg: "Poll date already taken", error: true })}; 
       if(!sameDatePoll){
-      let pollValuesInstances = [{}];
-      delete pollValuesInstances[0];
-      if(pollValueArray!=null || pollValueArray==""){
-        pollValueArray.forEach((element: any) => {
-          pollValuesInstances.push({description:element})
-        });    
-      } 
-      const PollsInstance = await models.Polls.create({
-        categoryId: categoryId,
-        description: description,
-        pollDate: pollDate,
-        poll_values: pollValuesInstances
-      }, {
-        include: [ models.PollValues ]
-      });
-      res.status(200).json({ data: PollsInstance, error: false });} 
+      const PollsInstance = await models.Polls.create(req.body,      
+       {include: [ models.PollValues ]});      
+      res.status(200).json({ data: PollsInstance, error: false });
+    } 
   } catch (error) {
      return res.status(500).json({ msg: error, error: true });
   }
@@ -123,14 +111,22 @@ const updatePolls = async (req: any , res: any) => {
   try {
       const PollsID = req.params.id;
       const Polls = await models.Polls.findByPk(PollsID);
-      
+      const PollValues= req.body.poll_values;
       if (Polls) {
-        Polls.set(req.body);
-        await Polls.save();
+        await Polls.update(req.body);
         res.status(200).json({ data: Polls, error: false });
       }
       else {
           res.status(404).json({ msg: 'Polls not found', error: true });
+      }
+      if(PollValues){   
+        PollValues.forEach(async (pollValueInstance: any) => {          
+            const [pollvalue, created] = await models.PollValues.upsert({
+              id: pollValueInstance.id,
+              PollId:pollValueInstance.PollId,
+              description: pollValueInstance.description,
+            });      
+       }); 
       }
   } catch (error) {
       return res.status(500).json({ msg: error, error: true });
