@@ -120,12 +120,17 @@ const updatePolls = async (req: any , res: any) => {
           res.status(404).json({ msg: 'Polls not found', error: true });
       }
       if(PollValues){   
-        PollValues.forEach(async (pollValueInstance: any) => {          
+        PollValues.forEach(async (pollValueInstance: any) => {  
+          if (pollValueInstance.description=="" && pollValueInstance.id!=null){
+            const pollvalue = await models.PollValues.destroy({ where: { id: pollValueInstance.id } }); 
+          }
+          else{      
             const [pollvalue, created] = await models.PollValues.upsert({
               id: pollValueInstance.id,
               PollId:pollValueInstance.PollId,
               description: pollValueInstance.description,
-            });      
+            });
+          }      
        }); 
       }
   } catch (error) {
