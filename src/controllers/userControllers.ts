@@ -173,7 +173,10 @@ const getUserByIdWithPosts = async (req: any, res: any) => {
   try {
     const userID = req.params.id;   
     const response = await models.User.findByPk(userID,{
-      include: { all: true, nested: true, paranoid: false },
+      include:[{
+        model: models.Posts, 
+        include:[{model:models.Categories,paranoid:false}]
+        }]
     });
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
