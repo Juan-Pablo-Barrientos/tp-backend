@@ -25,10 +25,14 @@ const getAllPosts = async (req:any, res:any) => {
   const autorId = req.query.autorId;
   const categoryId= req.query.categoryId;
   const keyWord = req.query.title;
+  const provinceId=req.query.provinceId
 
   let conditions  = [{}];
   if(categoryId!=null){
     conditions.push({categoryId:categoryId});
+    }
+  if(provinceId!=null){
+    conditions.push({provinceId:provinceId});
     }
   if(autorId!=null){
     conditions.push({userId:autorId});
@@ -36,6 +40,7 @@ const getAllPosts = async (req:any, res:any) => {
   if(keyWord!=null || keyWord==""){
     conditions.push({title: {[Op.substring]:keyWord}})
   }
+  console.log(conditions)
   try {
       const response = await models.Posts.findAll({
         where:conditions,
