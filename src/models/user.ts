@@ -36,6 +36,7 @@ const User = sequelizeORM.define('users', {
     type: DataTypes.BOOLEAN,
     allowNull: true
   },
+  path_img: DataTypes.STRING,
   
   bio:DataTypes.TEXT
 },

@@ -1,5 +1,6 @@
 import * as models from '../models/index';
 const jwt = require("jsonwebtoken");
+var cloudinary = require('cloudinary').v2;
 
 const getUserById = async (req: any, res: any) => {
   try {
@@ -89,7 +90,7 @@ const emailExist = async (req:any , res:any) => {
 const addUser = async (req: any , res: any) => {
   try {
     const{name,surname,username,password,role,email,phoneNumber} = req.body;
-          
+    
       if (!name) {
         return res.status(400).json({ msg: "name field is required.", error: true });
       }
@@ -130,7 +131,15 @@ const updateUser = async (req: any , res: any) => {
   try {
       const userID = req.params.id;
       const user = await models.User.findByPk(userID);
-      
+      let img;
+      if(req.files['myImage']!==undefined){
+        img = req.files['myImage'][0];
+        }
+    if(img){
+      const options = {use_filename: false, unique_filename: false, overwrite: true,};
+        const result = await cloudinary.uploader.upload(img.path, options);
+        req.body.path_img = ("https://res.cloudinary.com/clawgames/image/upload/w_1000,ar_16:9,c_fill/"+result.public_id)
+      }
       if (user) {
         user.set(req.body);
         await user.save();
