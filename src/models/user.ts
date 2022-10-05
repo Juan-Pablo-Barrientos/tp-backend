@@ -32,8 +32,8 @@ const User = sequelizeORM.define('users', {
 
   phoneNumber: DataTypes.STRING(45),
 
-  subscribedUntil: {
-    type: DataTypes.DATE,
+  subscribed: {
+    type: DataTypes.BOOLEAN,
     allowNull: true
   },
   

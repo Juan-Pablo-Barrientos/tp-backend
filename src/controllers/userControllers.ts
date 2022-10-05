@@ -111,15 +111,6 @@ const addUser = async (req: any , res: any) => {
       if (!phoneNumber) {
           return res.status(400).json({ msg: "phoneNumber field is required.", error: true });
       }
-      req.body.postPermission=false
-      req.body.subscribedUntil=false
-      if (req.body.subscribedUntil) {
-        req.body.subscribedUntil = new Date();
-        req.body.subscribedUntil.setMonth(req.body.subscribedUntil.getMonth() + 1);
-      }
-      else {
-        delete req.body['subscribedUntil'];
-      }
       const alreadyExistingUser = await models.User.findOne({ where: {username} });
       
       if (alreadyExistingUser === null){
@@ -232,7 +223,7 @@ const login= async (req:any, res:any, next:any) => {
         "surname",
         "role",
         "phoneNumber",
-        "subscribedUntil",
+        "subscribed",
         "Bio",
         "password",
         "email",

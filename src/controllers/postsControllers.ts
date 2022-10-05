@@ -4,6 +4,18 @@ import { Op } from 'sequelize'
 const Sequelize = require('sequelize')
 import * as models from '../models/index';
 var cloudinary = require('cloudinary').v2;
+const nodemailer = require('nodemailer');
+require('dotenv').config({path:`.env.${process.env.ENV}`});
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.USER_EMAIL,
+        pass: process.env.PASS_EMAIL
+    }
+});
 
 
 const getPostsById = async (req: any, res: any) => {
@@ -40,7 +52,6 @@ const getAllPosts = async (req:any, res:any) => {
   if(keyWord!=null || keyWord==""){
     conditions.push({title: {[Op.substring]:keyWord}})
   }
-  console.log(conditions)
   try {
       const response = await models.Posts.findAll({
         where:conditions,
@@ -57,18 +68,63 @@ const addPosts= async (req:any, res:any, next:any) => {
   post.clicks=0;
   post.postDate=Sequelize.cast(new Date(), "datetime");
   let img = req.files['myImage'][0];
+  let postCreated:any=null
   try {
     if(img){
       const options = {use_filename: false, unique_filename: false,overwrite: true,};
         const result = await cloudinary.uploader.upload(img.path, options);
         post.path_img = ("https://res.cloudinary.com/clawgames/image/upload/"+result.public_id)
-    }   
-    const postCreated = await models.Posts.create(post);
-    return res.status(201).send(postCreated);
+    }
+    postCreated = await models.Posts.create(post);
+    return res.status(201).send(postCreated)
+      
   } catch (error) {
     return next(error);
+  } finally {
+    if (postCreated) {
+      const subscribedUsers = await models.User.findAll({where:{subscribed:true}}) 
+      subscribedUsers.forEach((user)=>{
+        const mailOptions:any = {
+            from: "Remitente",
+            to: `${user.getDataValue('email')}`,
+            subject: `Primicia: ${postCreated.getDataValue('title')}`,
+            html: `<!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta http-equiv="X-UA-Compatible" />
+              <title>Noticia</title>
+              <style>
+                .fit-picture{
+                  width:100%;
+                }
+              </style>
+            <div class="" style="width:50%">
+            <img src="${postCreated.getDataValue('path_img')}" class="fit-picture">
+            <div class="card-body px-4">
+            <h4 class="card-title">Titulo ${postCreated.getDataValue('title')}</h4>
+            <p class="card-text">${postCreated.getDataValue('body')}
+            </p>
+              <div class="row">
+                  <div class="col ">
+                    <a href="https://tp-frontend.vercel.app/PostAuthor/${postCreated.getDataValue('id')}" class="btn btn-primary text-white " >Leer más</a>
+                  </div>
+               </div>
+              </div>
+            </div>
+            </body>
+          </html>`
+        }
+        transporter.sendMail(mailOptions, (err: any, info: any) => {
+            if (err) {
+                console.log('error');
+            }
+        })
+    })
   }
-}
+  }
+  }
+
 
 const updatePosts = async (req: any , res: any) => {
   try {
