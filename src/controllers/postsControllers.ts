@@ -71,9 +71,9 @@ const addPosts= async (req:any, res:any, next:any) => {
   let postCreated:any=null
   try {
     if(img){
-      const options = {use_filename: false, unique_filename: false,overwrite: true,};
+      const options = {use_filename: false, unique_filename: false, overwrite: true,};
         const result = await cloudinary.uploader.upload(img.path, options);
-        post.path_img = ("https://res.cloudinary.com/clawgames/image/upload/"+result.public_id)
+        post.path_img = ("https://res.cloudinary.com/clawgames/image/upload/w_1000,ar_16:9,c_fill/"+result.public_id)
     }
     postCreated = await models.Posts.create(post);
     return res.status(201).send(postCreated)
@@ -139,7 +139,7 @@ const updatePosts = async (req: any , res: any) => {
         if(img){
         const options = {use_filename: false, unique_filename: false,overwrite: true,};
           const result = await cloudinary.uploader.upload(img.path, options);
-          let cdnImgPath = ("https://res.cloudinary.com/clawgames/image/upload/"+result.public_id)
+          let cdnImgPath = ("https://res.cloudinary.com/clawgames/image/upload/w_1000,ar_16:9,c_fill/"+result.public_id)
           Posts.set({
             path_img:cdnImgPath
           });
