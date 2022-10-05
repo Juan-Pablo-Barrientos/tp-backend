@@ -132,7 +132,7 @@ const updateUser = async (req: any , res: any) => {
       const userID = req.params.id;
       const user = await models.User.findByPk(userID);
       let img;
-      if('files.myImage[0]' in req){
+      if(Object.keys(req.files).length !== 0){
         img = req.files['myImage'][0];
         }
     if(img){
