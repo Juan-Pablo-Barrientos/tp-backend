@@ -55,7 +55,17 @@ const getAllPosts = async (req:any, res:any) => {
   try {
       const response = await models.Posts.findAll({
         where:conditions,
-        include: { all: true, nested: true, paranoid: false },
+         include:[
+          {
+            model: models.User       
+          },
+          {
+            model: models.Categories           
+          },
+          {
+            model: models.Provinces
+          }],
+          paranoid:false
       });
       return res.status(200).json({ data: response, error: false });
   } catch (error) {
@@ -181,7 +191,17 @@ const getPostsByIdWithAuthor = async (req: any, res: any) => {
   try {
     const PostsID = req.params.id;   
     let response:any = await models.Posts.findByPk(PostsID,{
-      include: { all: true, nested: true ,paranoid: false },
+      include:[
+        {
+          model: models.User       
+        },
+        {
+          model: models.Categories           
+        },
+        {
+          model: models.Provinces
+        }],
+        paranoid:false
     });
     if(response){
       response.clicks+=1
