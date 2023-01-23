@@ -8,6 +8,20 @@ const homeRender = async (req: any, res: any) => {
     return res.render('../src/views/Body/index.ejs', {posts});
 };
 
+const weatherApiKey = async (req: any, res: any) => {
+    try {
+        const apikey = process.env.WEATHERAPIKEY;   
+        const response = apikey;
+        if (response != null) {
+          return res.status(200).json({ data: response, error: false });
+        }
+        else {
+          return res.status(404).json({ msg: `apikeyNotFound.`, error: true });
+        }
+      } catch (error) {
+        return res.status(500).json({ msg: error, error: true });
+      }
+};
 
 const create = async (req: any, res: any) => {
     const categories = await models.Categories.findAll();
@@ -32,4 +46,4 @@ const postsEdit = async ( req: any, res: any) =>{
     return res.render('../src/views/body/edit.ejs',{post,provinces,categories});
 }
 
-export {homeRender,create,postsShow,postsEdit }
+export {homeRender,create,postsShow,postsEdit,weatherApiKey }

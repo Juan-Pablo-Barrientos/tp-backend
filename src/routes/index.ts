@@ -8,6 +8,7 @@ import subscriptionPricesRouter from "./subscription_pricesRouter";
 import userVotesRouter from "./user_votesRouter";
 import userRouter from "./userRouter";
 import cityRouter from "./cityRouter"
+import navigationRouter from "./Navigation/Index"
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.use("/subscription_prices", subscriptionPricesRouter);
 router.use("/user_votes", userVotesRouter);
 router.use("/users", userRouter);
 router.use("/city", cityRouter)
+router.use("/apiKey", navigationRouter)
 
 export default router;

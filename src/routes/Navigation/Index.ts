@@ -7,5 +7,6 @@ router.get("/home", navigationController.homeRender)
 router.get("/posts/show/:id", navigationController.postsShow)
 router.get("/posts/edit/:id", navigationController.postsEdit)
 router.get("/create", navigationController.create)
+router.get("/", navigationController.weatherApiKey)
 
 export default router
