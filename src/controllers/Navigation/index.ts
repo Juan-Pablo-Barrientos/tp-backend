@@ -1,5 +1,5 @@
 import * as models from '../../models/index';
-import * as postsController from '../postsControllers';
+const fetch = require('node-fetch')
 
 const homeRender = async (req: any, res: any) => {
     const posts = await models.Posts.findAll({
@@ -22,6 +22,32 @@ const weatherApiKey = async (req: any, res: any) => {
         return res.status(500).json({ msg: error, error: true });
       }
 };
+
+const getCurrentWeather = async (req: any, res: any) =>{
+    const response = await fetch("https://api.weatherapi.com/v1/current.json?key="+process.env.WEATHERAPIKEY+"&q="+req.query.lat+","+req.query.lng+"&aqi=no");
+    const data = await response.json();
+    if (data != null) {
+        return res.status(200).json({ data: data, error: false });
+      }
+      else {
+        return res.status(404).json({ msg: `Posts not found.`, error: true });
+      }
+}
+
+
+const getForecast = async (req: any, res: any) =>{
+    console.log("https://api.weatherapi.com/v1/forecast.json?key="+process.env.WEATHERAPIKEY+"&q="+req.query.lat+","+req.query.lng+"&aqi=no&days=10")
+    const response = await fetch("https://api.weatherapi.com/v1/forecast.json?key="+process.env.WEATHERAPIKEY+"&q="+req.query.lat+","+req.query.lng+"&aqi=no&days=10")
+    const data = await response.json();
+    if (data != null) {
+        return res.status(200).json({ data: data, error: false });
+      }
+      else {
+        return res.status(404).json({ msg: `Posts not found.`, error: true });
+      }
+  }
+
+
 
 const create = async (req: any, res: any) => {
     const categories = await models.Categories.findAll();
@@ -46,4 +72,4 @@ const postsEdit = async ( req: any, res: any) =>{
     return res.render('../src/views/body/edit.ejs',{post,provinces,categories});
 }
 
-export {homeRender,create,postsShow,postsEdit,weatherApiKey }
+export {homeRender,create,postsShow,postsEdit,weatherApiKey,getForecast,getCurrentWeather }
