@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "JuanPabloBarrientos",
-    "password": "password",
+    "username": "root",
+    "password": "root",
     "database": "newspaper",
     "host": "localhost",
     "dialect": "mysql"
