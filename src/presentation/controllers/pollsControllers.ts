@@ -1,5 +1,5 @@
 import Sequelize from "sequelize";
-import * as models from "../models/index";
+import * as models from "../../models/index";
 
 const getPollsById = async (req: any, res: any) => {
   try {
@@ -167,13 +167,11 @@ const deletePolls = async (req: any, res: any) => {
     const Polls = await models.Polls.findByPk(PollsID);
     if (Polls) {
       await Polls.destroy();
-      res
-        .status(200)
-        .json({
-          data: Polls,
-          error: false,
-          msg: "Polls deleted successfully.",
-        });
+      res.status(200).json({
+        data: Polls,
+        error: false,
+        msg: "Polls deleted successfully.",
+      });
     } else {
       res.status(404).json({ msg: "Polls not found", error: true });
     }

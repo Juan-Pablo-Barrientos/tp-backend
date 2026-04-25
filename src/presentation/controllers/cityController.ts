@@ -1,14 +1,14 @@
-import sequelizeORM from "../database/connection";
-import * as models from "../models/index";
+import { Request, Response } from "express";
+import { IdParams } from "../../contracts/common/id_param";
+import * as models from "../../models/index";
 
-const getCitiesById = async (req: any, res: any) => {
+const getCitiesById = async (req: Request<IdParams>, res: Response) => {
   try {
     const citiesID = req.params.id;
     const response = await models.Cities.findByPk(citiesID);
     if (response != null) {
       return res.status(200).json({ data: response, error: false });
-    }
-    else {
+    } else {
       return res.status(404).json({ msg: `City not found.`, error: true });
     }
   } catch (error) {
@@ -31,10 +31,14 @@ const addCities = async (req: any, res: any) => {
     const provinceId = req.body.provinceId;
 
     if (!name) {
-      return res.status(400).json({ msg: "name field is required.", error: true });
+      return res
+        .status(400)
+        .json({ msg: "name field is required.", error: true });
     }
     if (!provinceId) {
-      return res.status(400).json({ msg: "provinceId field is required.", error: true });
+      return res
+        .status(400)
+        .json({ msg: "provinceId field is required.", error: true });
     }
     const cityInstance = models.Cities.build(req.body);
     await cityInstance.save();
@@ -66,13 +70,11 @@ const deleteCities = async (req: any, res: any) => {
     const cityInstance = await models.Cities.findByPk(citiesID);
     if (cityInstance) {
       await cityInstance.destroy();
-      res
-        .status(200)
-        .json({
-          data: cityInstance,
-          error: false,
-          msg: "City deleted successfully.",
-        });
+      res.status(200).json({
+        data: cityInstance,
+        error: false,
+        msg: "City deleted successfully.",
+      });
     } else {
       res.status(404).json({ msg: "City not found", error: true });
     }
@@ -80,4 +82,4 @@ const deleteCities = async (req: any, res: any) => {
     return res.status(500).json({ msg: error, error: true });
   }
 };
-export { updateCities, deleteCities, addCities, getCitiesById, getAllCities };
+export { addCities, deleteCities, getAllCities, getCitiesById, updateCities };

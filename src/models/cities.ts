@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelizeORM from "../database/connection";
+import sequelizeORM from "../infrastructure/connection";
 import Provinces from "./provinces";
 
 const Cities = sequelizeORM.define("Cities", {
@@ -10,7 +10,8 @@ const Cities = sequelizeORM.define("Cities", {
     primaryKey: true,
   },
 
-  name: { type: DataTypes.STRING(200), allowNull: false }});
+  name: { type: DataTypes.STRING(200), allowNull: false },
+});
 
 Provinces.hasMany(Cities);
 Cities.belongsTo(Provinces);

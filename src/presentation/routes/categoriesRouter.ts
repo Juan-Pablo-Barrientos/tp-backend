@@ -1,6 +1,6 @@
 import express from "express";
-const router = express.Router();
 import * as categoriesController from "../controllers/categoriesController";
+const router = express.Router();
 
 router.get("/:id", categoriesController.getCategoriesById);
 router.get("/", categoriesController.getAllCategories);

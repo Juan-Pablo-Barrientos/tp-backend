@@ -100,5 +100,5 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "eslint.config.mts", "src/views/resources"]
+  "exclude": ["node_modules", "dist", "eslint.config.mts", "src/core/views/resources"]
 }

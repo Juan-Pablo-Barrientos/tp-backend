@@ -1,6 +1,6 @@
 import express from "express";
-const router = express.Router();
 import * as provincesControllers from "../controllers/provincesControllers";
+const router = express.Router();
 
 router.get("/:id", provincesControllers.getProvincesById);
 router.get("/", provincesControllers.getAllProvinces);
