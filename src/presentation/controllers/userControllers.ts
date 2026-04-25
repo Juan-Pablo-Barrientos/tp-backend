@@ -1,6 +1,8 @@
-import * as models from "../../models/index";
-import jwt from "jsonwebtoken";
 import { v2 } from "cloudinary";
+import jwt, { type SignOptions } from "jsonwebtoken";
+import process from "node:process";
+import * as models from "../../models/index";
+
 const cloudinary = v2;
 
 const getUserById = async (req: any, res: any) => {
@@ -241,12 +243,21 @@ const loginCore = async (usernPass: any) => {
         PassMatch = true;
       }
       if (PassMatch) {
+        const authSecret = process.env.AUTH_SECRET;
+        if (!authSecret) {
+          throw new Error("AUTH_SECRET is not configured");
+        }
+
+        const authExpires = process.env.AUTH_EXPIRES;
+        const signOptions: SignOptions = {};
+        if (authExpires) {
+          signOptions.expiresIn = authExpires as SignOptions["expiresIn"];
+        }
+
         userToJson.jwt = jwt.sign(
           { id_user: userToJson.id, role: userToJson.role },
-          process.env.AUTH_SECRET,
-          {
-            expiresIn: process.env.AUTH_EXPIRES,
-          },
+          authSecret,
+          signOptions,
         );
         delete userToJson.password;
         return userToJson;

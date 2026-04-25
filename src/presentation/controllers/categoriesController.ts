@@ -1,29 +1,34 @@
+import { Request, Response } from "express";
+import { MessageResponse } from "../../auth/responses/Message.response";
+import { IdParams } from "../../contracts/common/id_param";
 import * as models from "../../models/index";
+import { ErrorHelper } from "../../core/helpers/error.helper";
+import { getAllCategoriesRequest } from "../../contracts/requests/categories/getAllCategories.request";
 
-const getCategoriesById = async (req: any, res: any) => {
+const getCategoriesById = async (req: Request<IdParams>, res: Response<MessageResponse<unknown>>) => {
   try {
     const categoriesID = req.params.id;
     const response = await models.Categories.findByPk(categoriesID);
     if (response != null) {
-      return res.status(200).json({ data: response, error: false });
+      return res.status(200).json(MessageResponse.Ok(response));
     } else {
-      return res.status(404).json({ msg: `Category not found.`, error: true });
+      return res.status(404).json(MessageResponse.Error("Category not found."));
     }
   } catch (error) {
-    return res.status(500).json({ msg: error, error: true });
+    return res.status(500).json(ErrorHelper.Handle(error));
   }
 };
 
-const getAllCategories = async (req: any, res: any) => {
+const getAllCategories = async (req: Request, res: Response<MessageResponse<unknown>>) => {
   try {
     const response = await models.Categories.findAll();
-    return res.status(200).json({ data: response, error: false });
+    return res.status(200).json(MessageResponse.Ok(response));
   } catch (error) {
-    return res.status(500).json({ msg: error, error: true });
+    return res.status(500).json(ErrorHelper.Handle(error));
   }
 };
 
-const addCategories = async (req: any, res: any) => {
+const addCategories = async (req: Request<getAllCategoriesRequest>, res: Response<MessageResponse<unknown>>) => {
   try {
     const name = req.body.name;
 
@@ -34,12 +39,13 @@ const addCategories = async (req: any, res: any) => {
     }
     const categoryInstance = models.Categories.build(req.body);
     await categoryInstance.save();
-    res.status(200).json({ data: categoryInstance, error: false });
+    return res.status(200).json(MessageResponse.Ok(categoryInstance));
   } catch (error) {
-    return res.status(500).json({ msg: error, error: true });
+    return res.status(500).json(ErrorHelper.Handle(error));
   }
 };
-const updateCategories = async (req: any, res: any) => {
+
+const updateCategories = async (req: Request<IdParams>, res: Response<MessageResponse<unknown>>) => {
   try {
     const categoriesID = req.params.id;
     const category = await models.Categories.findByPk(categoriesID);
@@ -47,33 +53,27 @@ const updateCategories = async (req: any, res: any) => {
     if (category) {
       category.set(req.body);
       await category.save();
-      res.status(200).json({ data: category, error: false });
+      return res.status(200).json(MessageResponse.Ok(category));
     } else {
-      res.status(404).json({ msg: "Category not found", error: true });
+      return res.status(404).json(MessageResponse.Error("Category not found."));
     }
   } catch (error) {
-    return res.status(500).json({ msg: error, error: true });
+    return res.status(500).json(ErrorHelper.Handle(error));
   }
 };
 
-const deleteCategories = async (req: any, res: any) => {
+const deleteCategories = async (req: Request<IdParams>, res: Response<MessageResponse<unknown>>) => {
   try {
     const categoriesID = req.params.id;
     const category = await models.Categories.findByPk(categoriesID);
     if (category) {
       await category.destroy();
-      res
-        .status(200)
-        .json({
-          data: category,
-          error: false,
-          msg: "Category deleted successfully.",
-        });
+      return res.status(200).json(MessageResponse.Ok(category));
     } else {
-      res.status(404).json({ msg: "Category not found", error: true });
+      return res.status(404).json(MessageResponse.Error("Category not found."));
     }
   } catch (error) {
-    return res.status(500).json({ msg: error, error: true });
+    return res.status(500).json(ErrorHelper.Handle(error));
   }
 };
 export {
