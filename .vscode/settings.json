@@ -1,9 +1,15 @@
 {
-    "settings": {
-        "editor.codeActionsOnSave": {
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "search.exclude": {
+        "**/node_modules": true,
+        "package-lock.json": true,
+    },
+    "git.openRepositoryInParentFolders": "always",
+    "js/ts.tsdk.path": "../node_modules/typescript/lib",
+    "js/ts.tsdk.promptToUseWorkspaceVersion": true
 
-            "source.fixAll.eslint": true
-          },
-          "eslint.validate": ["javascript"]
-    }
 }

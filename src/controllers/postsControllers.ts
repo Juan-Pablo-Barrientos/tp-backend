@@ -2,7 +2,7 @@ import { request } from 'express';
 import { Op } from 'sequelize'
 const Sequelize = require('sequelize')
 import * as models from '../models/index';
-var cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary').v2;
 const nodemailer = require('nodemailer');
 require('dotenv').config({ path: `.env.${process.env.ENV}` });
 
@@ -38,7 +38,7 @@ const getAllPosts = async (req: any, res: any) => {
   const keyWord = req.query.title;
   const provinceId = req.query.provinceId
 
-  let conditions = [{}];
+  const conditions = [{}];
   if (categoryId != null) {
     conditions.push({ categoryId: categoryId });
   }
@@ -73,10 +73,10 @@ const getAllPosts = async (req: any, res: any) => {
 };
 
 const addPosts = async (req: any, res: any, next: any) => {
-  let post = req.body;
+  const post = req.body;
   post.clicks = 0;
   post.postDate = Sequelize.cast(new Date(), "datetime");
-  let img = req.files['myImage'][0];
+  const img = req.files['myImage'][0];
   let postCreated: any = null
   try {
     if (img) {
@@ -148,7 +148,7 @@ const updatePosts = async (req: any, res: any) => {
       if (img) {
         const options = { use_filename: false, unique_filename: false, overwrite: true, };
         const result = await cloudinary.uploader.upload(img.path, options);
-        let cdnImgPath = ("https://res.cloudinary.com/clawgames/image/upload/w_1000,ar_16:9,c_fill/" + result.public_id)
+        const cdnImgPath = ("https://res.cloudinary.com/clawgames/image/upload/w_1000,ar_16:9,c_fill/" + result.public_id)
         Posts.set({
           path_img: cdnImgPath
         });
@@ -189,7 +189,7 @@ const deletePosts = async (req: any, res: any) => {
 const getPostsByIdWithAuthor = async (req: any, res: any) => {
   try {
     const PostsID = req.params.id;
-    let response: any = await models.Posts.findByPk(PostsID, {
+    const response: any = await models.Posts.findByPk(PostsID, {
       include: [
         {
           model: models.User
