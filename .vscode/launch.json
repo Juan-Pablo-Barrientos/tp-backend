@@ -1,15 +1,19 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-chrome",
+            "type": "node",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "name": "Launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/src/index.ts",
+            "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
+            "console": "integratedTerminal",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ],
+            "runtimeExecutable": "/home/coffpa/.nvs/default/bin/node"
         }
     ]
 }
