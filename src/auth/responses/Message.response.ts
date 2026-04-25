@@ -1,11 +1,15 @@
 export class MessageResponse<T = unknown>{
-    constructor(public success: boolean, public msg: string, public data?: T) {}
+    constructor(public error: boolean, public msg: string, public data?: T) {}
 
-    static get Ok(): MessageResponse<null> {
-        return new MessageResponse(true, "OK", null);
+    static Ok<T>(data: T): MessageResponse<T> {
+        return new MessageResponse(false, "OK", data);
+    }
+
+    static Error(errorMsg: string): MessageResponse<null> {
+        return new MessageResponse(true, errorMsg, null);
     }
 
     static get Forbidden(): MessageResponse<null> {
-        return new MessageResponse(false, "Forbidden", null);
+        return new MessageResponse(true, "Forbidden", null);
     }
 }
