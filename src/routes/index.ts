@@ -9,9 +9,13 @@ import userVotesRouter from "./user_votesRouter";
 import userRouter from "./userRouter";
 import cityRouter from "./cityRouter"
 import weatherRouter from "./Navigation/Index"
+import { authenticateJWT } from "../auth/middlewares/authenticateJWT.middleware";
 
 const router = express.Router();
 
+router.use("/users", userRouter);
+
+router.use(authenticateJWT);
 router.use("/categories", categoriesRouter);
 router.use("/poll_values", pollValuesRouter);
 router.use("/polls", pollsRouter);
@@ -19,7 +23,6 @@ router.use("/posts", postsRouter);
 router.use("/provinces", provincesRouter);
 router.use("/subscription_prices", subscriptionPricesRouter);
 router.use("/user_votes", userVotesRouter);
-router.use("/users", userRouter);
 router.use("/city", cityRouter)
 router.use("/weather", weatherRouter)
 
