@@ -20,7 +20,7 @@ router.get("/:id", userControllers.getUserById);
 router.get("/:username/exists", userControllers.userExist);
 router.get("/:email/existemail", userControllers.emailExist);
 router.get("/:id/posts", userControllers.getUserByIdWithPosts);
-router.get("/", authorizeRoles(["admin"]), userControllers.getAllUser);
+router.get("/", authorizeRoles(["Admin"]), userControllers.getAllUser);
 router.put("/:id", multerConfig, userControllers.updateUser);
 router.delete("/:id", userControllers.deleteUser);
 
