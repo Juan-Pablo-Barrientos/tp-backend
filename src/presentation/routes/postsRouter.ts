@@ -1,7 +1,7 @@
 import express from "express";
 import * as postsControllers from "../controllers/postsControllers";
 const router = express.Router();
-const multer = require("multer");
+import multer from "multer";
 const upload = multer({
   dest: "public/images",
   limits: { fieldSize: 50 * 1024 * 1024 },

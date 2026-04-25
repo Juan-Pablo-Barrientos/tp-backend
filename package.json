@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/Juan-Pablo-Barrientos/tp-backend#readme",
     "dependencies": {
+        "@types/multer": "^2.1.0",
         "body-parser": "^2.2.2",
         "cloudinary": "^2.9.0",
         "cors": "^2.8.6",

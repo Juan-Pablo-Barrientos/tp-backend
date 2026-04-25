@@ -1,9 +1,11 @@
 import express from "express";
+import multer from "multer";
 import { authenticateJWT } from "../../auth/middlewares/authenticateJWT.middleware";
 import { authorizeRoles } from "../../auth/middlewares/authorize.middleware";
 import * as userControllers from "../controllers/userControllers";
+
+
 const router = express.Router();
-const multer = require("multer");
 const upload = multer({
   dest: "public/images",
   limits: { fieldSize: 50 * 1024 * 1024 },

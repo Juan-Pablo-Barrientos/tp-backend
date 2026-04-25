@@ -1,6 +1,7 @@
 import * as models from "../../models/index";
-const jwt = require("jsonwebtoken");
-const cloudinary = require("cloudinary").v2;
+import jwt from "jsonwebtoken";
+import { v2 } from "cloudinary";
+const cloudinary = v2;
 
 const getUserById = async (req: any, res: any) => {
   try {
