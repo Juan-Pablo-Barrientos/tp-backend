@@ -9,7 +9,7 @@ import userVotesRouter from "./user_votesRouter";
 import userRouter from "./userRouter";
 import cityRouter from "./cityRouter"
 import weatherRouter from "./Navigation/Index"
-import { authenticateJWT } from "../middlewares/authenticateJWT.middleware";
+import { authenticateJWT } from "../auth/middlewares/authenticateJWT.middleware";
 
 const router = express.Router();
 
