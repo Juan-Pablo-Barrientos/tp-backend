@@ -13,7 +13,7 @@
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ],
-            "runtimeExecutable": "/home/coffpa/.nvs/default/bin/node"
+            "runtimeExecutable": "node"
         }
     ]
 }
